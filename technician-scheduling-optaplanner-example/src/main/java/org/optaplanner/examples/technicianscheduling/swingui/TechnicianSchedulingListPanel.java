@@ -60,11 +60,20 @@ public class TechnicianSchedulingListPanel extends JPanel implements Scrollable 
     
     protected void addTaskLine(Task task) {
         JLabel locationLabel = new JLabel(task.getLocation().toString() 
-                + " | travel-time=" + task.getDistanceFromPreviousStandstill()
-                + " | scheduled=" + task.getArrivalTime() + "-" + task.getDepartureTime()
-                + " | window=" + task.getReadyTime() + "-" + task.getDueTime()
-                + " | duration=" + task.getServiceDuration());
+                + " | travel-time=" + displayTime(task.getDistanceFromPreviousStandstill())
+                + " | scheduled=" + displayTime(task.getArrivalTime()) + "-" + displayTime(task.getDepartureTime())
+                + " | window=" + displayTime(task.getReadyTime()) + "-" + displayTime(task.getDueTime())
+                + " | duration=" + displayTime(task.getServiceDuration()));
         add(locationLabel);
+    }
+    
+    private String displayTime(Long time) {
+        long totalMinutes = time / 2000;
+        long hours = totalMinutes / 60;
+        long minutes = totalMinutes % 60;
+        String hoursString = String.format("%02d", hours);
+        String minutesString = String.format("%02d", minutes);
+        return hoursString + ":" + minutesString;
     }
 
     public void updatePanel(TechnicianSchedulingSolution travelingSalesmanTour) {

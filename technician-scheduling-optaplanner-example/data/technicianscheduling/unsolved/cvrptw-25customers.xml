@@ -150,19 +150,19 @@
       <id>0</id>
       <location class="VrpAirLocation" reference="3"/>
       <readyTime>0</readyTime>
-      <dueTime>1236000</dueTime>
+      <dueTime>960000</dueTime>
     </VrpTimeWindowedDepot>
     <VrpTimeWindowedDepot id="900">
       <id>1</id>
       <location class="VrpAirLocation" reference="800"/>
       <readyTime>0</readyTime>
-      <dueTime>1236000</dueTime>
+      <dueTime>960000</dueTime>
     </VrpTimeWindowedDepot>
     <VrpTimeWindowedDepot id="901">
       <id>2</id>
       <location class="VrpAirLocation" reference="801"/>
       <readyTime>0</readyTime>
-      <dueTime>1236000</dueTime>
+      <dueTime>960000</dueTime>
     </VrpTimeWindowedDepot>
   </depotList>
   <technicianList id="31">
@@ -183,8 +183,8 @@
     <VrpTimeWindowedCustomer id="58">
       <id>1</id>
       <location class="VrpAirLocation" reference="4"/>
-      <readyTime>912000</readyTime>
-      <dueTime>967000</dueTime>
+      <readyTime>910000</readyTime>
+      <dueTime>960000</dueTime>
       <serviceDuration>90000</serviceDuration>
     </VrpTimeWindowedCustomer>
     <VrpTimeWindowedCustomer id="59">
@@ -323,8 +323,8 @@
     <VrpTimeWindowedCustomer id="78">
       <id>21</id>
       <location class="VrpAirLocation" reference="24"/>
-      <readyTime>914000</readyTime>
-      <dueTime>965000</dueTime>
+      <readyTime>910000</readyTime>
+      <dueTime>960000</dueTime>
       <serviceDuration>90000</serviceDuration>
     </VrpTimeWindowedCustomer>
     <VrpTimeWindowedCustomer id="79">
