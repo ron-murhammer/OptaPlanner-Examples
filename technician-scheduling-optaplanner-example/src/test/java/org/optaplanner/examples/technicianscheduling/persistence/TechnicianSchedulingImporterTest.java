@@ -20,23 +20,23 @@ import java.io.File;
 import java.util.Collection;
 
 import org.junit.runners.Parameterized;
-import org.optaplanner.examples.common.persistence.SolutionDao;
-import org.optaplanner.examples.common.persistence.SolutionDaoTest;
-import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingDao;
+import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
+import org.optaplanner.examples.common.persistence.SolutionImporterTest;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 
-public class VehicleRoutingDaoTest extends SolutionDaoTest {
+public class TechnicianSchedulingImporterTest extends SolutionImporterTest {
 
     @Override
-    protected SolutionDao createSolutionDao() {
-        return new TechnicianSchedulingDao();
+    protected AbstractSolutionImporter createSolutionImporter() {
+        return new TechnicianSchedulingImporter();
     }
 
     @Parameterized.Parameters(name = "{index}: {0}")
-    public static Collection<Object[]> getSolutionFilesAsParameters() {
-        return getSolutionFilesAsParameters(new TechnicianSchedulingDao());
+    public static Collection<Object[]> getInputFilesAsParameters() {
+        return getInputFilesAsParameters(new TechnicianSchedulingImporter());
     }
 
-    public VehicleRoutingDaoTest(File solutionFile) {
+    public TechnicianSchedulingImporterTest(File solutionFile) {
         super(solutionFile);
     }
 

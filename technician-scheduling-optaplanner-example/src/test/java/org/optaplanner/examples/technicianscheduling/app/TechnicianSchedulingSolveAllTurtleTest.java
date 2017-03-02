@@ -27,14 +27,14 @@ import org.optaplanner.examples.technicianscheduling.app.TechnicianSchedulingApp
 import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 import org.optaplanner.examples.technicianscheduling.solver.score.TechnicianSchedulingEasyScoreCalculator;
 
-public class VehicleRoutingSolveAllTurtleTest extends ImportDirSolveAllTurtleTest {
+public class TechnicianSchedulingSolveAllTurtleTest extends ImportDirSolveAllTurtleTest {
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Collection<Object[]> getSolutionFilesAsParameters() {
         return getImportDirFilesAsParameters(new TechnicianSchedulingImporter());
     }
 
-    public VehicleRoutingSolveAllTurtleTest(File dataFile) {
+    public TechnicianSchedulingSolveAllTurtleTest(File dataFile) {
         super(dataFile);
     }
 
