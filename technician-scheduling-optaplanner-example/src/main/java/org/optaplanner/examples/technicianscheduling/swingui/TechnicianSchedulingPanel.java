@@ -19,6 +19,7 @@ package org.optaplanner.examples.technicianscheduling.swingui;
 import java.awt.BorderLayout;
 import java.util.Random;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import org.optaplanner.core.api.domain.solution.Solution;
@@ -38,6 +39,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
     public static final String LOGO_PATH = "/org/optaplanner/examples/technicianscheduling/swingui/vehicleRoutingLogo.png";
 
     private TechnicianSchedulingWorldPanel vehicleRoutingWorldPanel;
+    private TechnicianSchedulingListPanel technicianSchedulingListPanel;
 
     private Random demandRandom = new Random(37);
     private Long nextLocationId = null;
@@ -48,6 +50,9 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
         vehicleRoutingWorldPanel = new TechnicianSchedulingWorldPanel(this);
         vehicleRoutingWorldPanel.setPreferredSize(PREFERRED_SCROLLABLE_VIEWPORT_SIZE);
         tabbedPane.add("World", vehicleRoutingWorldPanel);
+        technicianSchedulingListPanel = new TechnicianSchedulingListPanel();
+        JScrollPane listScrollPane = new JScrollPane(technicianSchedulingListPanel);
+        tabbedPane.add("List", listScrollPane);
         add(tabbedPane, BorderLayout.CENTER);
     }
 
@@ -69,6 +74,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
     public void resetPanel(Solution solutionObject) {
         TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) solutionObject;
         vehicleRoutingWorldPanel.resetPanel(solution);
+        technicianSchedulingListPanel.resetPanel(solution);
         resetNextLocationId();
     }
 
@@ -86,6 +92,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
     public void updatePanel(Solution solutionObject) {
         TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) solutionObject;
         vehicleRoutingWorldPanel.updatePanel(solution);
+        technicianSchedulingListPanel.resetPanel(solution);
     }
 
     public SolverAndPersistenceFrame getWorkflowFrame() {

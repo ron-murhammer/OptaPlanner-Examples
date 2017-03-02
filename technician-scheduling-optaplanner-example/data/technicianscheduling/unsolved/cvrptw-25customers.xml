@@ -135,12 +135,12 @@
       <longitude>52.0</longitude>
     </VrpAirLocation>
     <VrpAirLocation id="800">
-      <id>25</id>
+      <id>26</id>
       <latitude>20.0</latitude>
       <longitude>50.0</longitude>
     </VrpAirLocation>
     <VrpAirLocation id="801">
-      <id>25</id>
+      <id>27</id>
       <latitude>20.0</latitude>
       <longitude>70.0</longitude>
     </VrpAirLocation>
@@ -159,7 +159,7 @@
       <dueTime>1236000</dueTime>
     </VrpTimeWindowedDepot>
     <VrpTimeWindowedDepot id="901">
-      <id>1</id>
+      <id>2</id>
       <location class="VrpAirLocation" reference="801"/>
       <readyTime>0</readyTime>
       <dueTime>1236000</dueTime>
