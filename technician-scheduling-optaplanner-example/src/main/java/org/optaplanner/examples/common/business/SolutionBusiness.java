@@ -18,9 +18,9 @@ package org.optaplanner.examples.common.business;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 import org.apache.commons.io.FileUtils;
@@ -125,25 +125,21 @@ public class SolutionBusiness<Solution_ extends Solution> {
         if (hasImporter()) {
             importDataDir = new File(dataDir, "import");
             if (!importDataDir.exists()) {
-                throw new IllegalStateException("The directory importDataDir (" + importDataDir.getAbsolutePath()
-                        + ") does not exist.");
+                throw new IllegalStateException("The directory importDataDir (" + importDataDir.getAbsolutePath() + ") does not exist.");
             }
         }
         unsolvedDataDir = new File(dataDir, "unsolved");
         if (!unsolvedDataDir.exists()) {
-            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath() + ") does not exist.");
         }
         solvedDataDir = new File(dataDir, "solved");
         if (!solvedDataDir.exists() && !solvedDataDir.mkdir()) {
-            throw new IllegalStateException("The directory solvedDataDir (" + solvedDataDir.getAbsolutePath()
-                    + ") does not exist and could not be created.");
+            throw new IllegalStateException("The directory solvedDataDir (" + solvedDataDir.getAbsolutePath() + ") does not exist and could not be created.");
         }
         if (hasExporter()) {
             exportDataDir = new File(dataDir, "export");
             if (!exportDataDir.exists() && !exportDataDir.mkdir()) {
-                throw new IllegalStateException("The directory exportDataDir (" + exportDataDir.getAbsolutePath()
-                        + ") does not exist and could not be created.");
+                throw new IllegalStateException("The directory exportDataDir (" + exportDataDir.getAbsolutePath() + ") does not exist and could not be created.");
             }
         }
     }
@@ -175,15 +171,13 @@ public class SolutionBusiness<Solution_ extends Solution> {
     }
 
     public List<File> getUnsolvedFileList() {
-        List<File> fileList = new ArrayList<File>(
-                FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()} , true));
+        List<File> fileList = new ArrayList<File>(FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
         Collections.sort(fileList, FILE_COMPARATOR);
         return fileList;
     }
 
     public List<File> getSolvedFileList() {
-        List<File> fileList = new ArrayList<File>(
-                FileUtils.listFiles(solvedDataDir, new String[]{solutionDao.getFileExtension()} , true));
+        List<File> fileList = new ArrayList<File>(FileUtils.listFiles(solvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
         Collections.sort(fileList, FILE_COMPARATOR);
         return fileList;
     }
@@ -218,7 +212,9 @@ public class SolutionBusiness<Solution_ extends Solution> {
 
     public void registerForBestSolutionChanges(final SolverAndPersistenceFrame solverAndPersistenceFrame) {
         solver.addEventListener(new SolverEventListener<Solution_>() {
+
             // Not called on the event thread
+            @Override
             public void bestSolutionChanged(BestSolutionChangedEvent<Solution_> event) {
                 // Avoid ConcurrentModificationException when there is an unprocessed ProblemFactChange
                 // because the paint method uses the same problem facts instances as the Solver's workingSolution
@@ -228,6 +224,8 @@ public class SolutionBusiness<Solution_ extends Solution> {
                     final Solution_ latestBestSolution = event.getNewBestSolution();
                     // Migrate it to the event thread
                     SwingUtilities.invokeLater(new Runnable() {
+
+                        @Override
                         public void run() {
                             // TODO by the time we process this event, a newer bestSolution might already be queued
                             guiScoreDirector.setWorkingSolution(latestBestSolution);
@@ -244,8 +242,7 @@ public class SolutionBusiness<Solution_ extends Solution> {
     }
 
     public List<ConstraintMatchTotal> getConstraintMatchTotalList() {
-        List<ConstraintMatchTotal> constraintMatchTotalList = new ArrayList<ConstraintMatchTotal>(
-                guiScoreDirector.getConstraintMatchTotals());
+        List<ConstraintMatchTotal> constraintMatchTotalList = new ArrayList<ConstraintMatchTotal>(guiScoreDirector.getConstraintMatchTotals());
         Collections.sort(constraintMatchTotalList);
         return constraintMatchTotalList;
     }
@@ -324,12 +321,10 @@ public class SolutionBusiness<Solution_ extends Solution> {
         // TODO Solver should support building a ChangeMove
         InnerScoreDirector guiInnerScoreDirector = (InnerScoreDirector) this.guiScoreDirector;
         SolutionDescriptor solutionDescriptor = guiInnerScoreDirector.getSolutionDescriptor();
-        GenuineVariableDescriptor variableDescriptor = solutionDescriptor.findGenuineVariableDescriptorOrFail(
-                entity, variableName);
+        GenuineVariableDescriptor variableDescriptor = solutionDescriptor.findGenuineVariableDescriptorOrFail(entity, variableName);
         if (variableDescriptor.isChained()) {
             SupplyManager supplyManager = guiInnerScoreDirector.getSupplyManager();
-            SingletonInverseVariableSupply inverseVariableSupply = supplyManager.demand(
-                    new SingletonInverseVariableDemand(variableDescriptor));
+            SingletonInverseVariableSupply inverseVariableSupply = supplyManager.demand(new SingletonInverseVariableDemand(variableDescriptor));
             return new ChainedChangeMove(entity, variableDescriptor, inverseVariableSupply, toPlanningValue);
         } else {
             return new ChangeMove(entity, variableDescriptor, toPlanningValue);
@@ -348,14 +343,12 @@ public class SolutionBusiness<Solution_ extends Solution> {
         EntityDescriptor entityDescriptor = solutionDescriptor.findEntityDescriptor(leftEntity.getClass());
         List<GenuineVariableDescriptor> variableDescriptorList = entityDescriptor.getGenuineVariableDescriptorList();
         if (entityDescriptor.hasAnyChainedGenuineVariables()) {
-            List<SingletonInverseVariableSupply> inverseVariableSupplyList
-                    = new ArrayList<SingletonInverseVariableSupply>(variableDescriptorList.size());
+            List<SingletonInverseVariableSupply> inverseVariableSupplyList = new ArrayList<SingletonInverseVariableSupply>(variableDescriptorList.size());
             SupplyManager supplyManager = guiInnerScoreDirector.getSupplyManager();
             for (GenuineVariableDescriptor variableDescriptor : variableDescriptorList) {
                 SingletonInverseVariableSupply inverseVariableSupply;
                 if (variableDescriptor.isChained()) {
-                    inverseVariableSupply = supplyManager.demand(
-                            new SingletonInverseVariableDemand(variableDescriptor));
+                    inverseVariableSupply = supplyManager.demand(new SingletonInverseVariableDemand(variableDescriptor));
                 } else {
                     inverseVariableSupply = null;
                 }

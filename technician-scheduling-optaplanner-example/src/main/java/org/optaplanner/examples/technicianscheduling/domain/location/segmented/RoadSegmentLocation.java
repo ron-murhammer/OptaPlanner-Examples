@@ -18,11 +18,10 @@ package org.optaplanner.examples.technicianscheduling.domain.location.segmented;
 
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
 import org.optaplanner.examples.technicianscheduling.domain.location.RoadLocation;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Like {@link RoadLocation},
@@ -67,10 +66,10 @@ public class RoadSegmentLocation extends Location {
     }
 
     public Double getDistanceDouble(RoadSegmentLocation location) {
-        Double distance = nearbyTravelDistanceMap.get((RoadSegmentLocation) location);
+        Double distance = nearbyTravelDistanceMap.get(location);
         if (distance == null) {
             // location isn't nearby
-            distance = getShortestDistanceDoubleThroughHubs((RoadSegmentLocation) location);
+            distance = getShortestDistanceDoubleThroughHubs(location);
         }
         return distance;
     }

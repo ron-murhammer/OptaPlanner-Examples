@@ -26,38 +26,43 @@ import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWin
 // TODO When this class is added only for TimeWindowedCustomer, use TimeWindowedCustomer instead of Customer
 public class ArrivalTimeUpdatingVariableListener implements VariableListener<Task> {
 
+    @Override
     public void beforeEntityAdded(ScoreDirector scoreDirector, Task customer) {
         // Do nothing
     }
 
+    @Override
     public void afterEntityAdded(ScoreDirector scoreDirector, Task customer) {
         if (customer instanceof TimeWindowedTask) {
             updateArrivalTime(scoreDirector, (TimeWindowedTask) customer);
         }
     }
 
+    @Override
     public void beforeVariableChanged(ScoreDirector scoreDirector, Task customer) {
         // Do nothing
     }
 
+    @Override
     public void afterVariableChanged(ScoreDirector scoreDirector, Task customer) {
         if (customer instanceof TimeWindowedTask) {
             updateArrivalTime(scoreDirector, (TimeWindowedTask) customer);
         }
     }
 
+    @Override
     public void beforeEntityRemoved(ScoreDirector scoreDirector, Task customer) {
         // Do nothing
     }
 
+    @Override
     public void afterEntityRemoved(ScoreDirector scoreDirector, Task customer) {
         // Do nothing
     }
 
     protected void updateArrivalTime(ScoreDirector scoreDirector, TimeWindowedTask sourceCustomer) {
         Standstill previousStandstill = sourceCustomer.getPreviousStandstill();
-        Long departureTime = (previousStandstill instanceof TimeWindowedTask)
-                ? ((TimeWindowedTask) previousStandstill).getDepartureTime() : null;
+        Long departureTime = (previousStandstill instanceof TimeWindowedTask) ? ((TimeWindowedTask) previousStandstill).getDepartureTime() : null;
         TimeWindowedTask shadowCustomer = sourceCustomer;
         Long arrivalTime = calculateArrivalTime(shadowCustomer, departureTime);
         while (shadowCustomer != null && ObjectUtils.notEqual(shadowCustomer.getArrivalTime(), arrivalTime)) {

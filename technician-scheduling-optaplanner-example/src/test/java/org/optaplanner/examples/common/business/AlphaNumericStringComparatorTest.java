@@ -16,11 +16,11 @@
 
 package org.optaplanner.examples.common.business;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Comparator;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class AlphaNumericStringComparatorTest {
 

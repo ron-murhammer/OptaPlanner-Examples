@@ -19,7 +19,6 @@ package org.optaplanner.examples.technicianscheduling.domain.timewindowed;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.variable.CustomShadowVariable;
-import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.solver.ArrivalTimeUpdatingVariableListener;
 
@@ -98,13 +97,11 @@ public class TimeWindowedTask extends Task {
     }
 
     public boolean isArrivalBeforeReadyTime() {
-        return arrivalTime != null
-                && arrivalTime < readyTime;
+        return arrivalTime != null && arrivalTime < readyTime;
     }
 
     public boolean isArrivalAfterDueTime() {
-        return arrivalTime != null
-                && dueTime < arrivalTime;
+        return arrivalTime != null && dueTime < arrivalTime;
     }
 
     @Override

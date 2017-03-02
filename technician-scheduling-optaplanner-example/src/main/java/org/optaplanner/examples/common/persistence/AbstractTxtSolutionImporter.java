@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +41,14 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         super(withoutDao);
     }
 
+    @Override
     public String getInputFileSuffix() {
         return DEFAULT_INPUT_FILE_SUFFIX;
     }
 
     public abstract TxtInputBuilder createTxtInputBuilder();
 
+    @Override
     public Solution readSolution(File inputFile) {
         Solution solution;
         BufferedReader bufferedReader = null;
@@ -127,13 +128,11 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         public void readConstantLine(String constantRegex) throws IOException {
             String line = bufferedReader.readLine();
             if (line == null) {
-                throw new IllegalArgumentException("File ends before a line is expected to be a constant regex ("
-                        + constantRegex + ").");
+                throw new IllegalArgumentException("File ends before a line is expected to be a constant regex (" + constantRegex + ").");
             }
             String value = line.trim();
             if (!value.matches(constantRegex)) {
-                throw new IllegalArgumentException("Read line (" + line + ") is expected to be a constant regex ("
-                        + constantRegex + ").");
+                throw new IllegalArgumentException("Read line (" + line + ") is expected to be a constant regex (" + constantRegex + ").");
             }
         }
 
@@ -168,8 +167,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
             do {
                 line = bufferedReader.readLine();
                 if (line == null) {
-                    throw new IllegalArgumentException("File ends before a line is expected to be a constant regex ("
-                            + constantRegex + ").");
+                    throw new IllegalArgumentException("File ends before a line is expected to be a constant regex (" + constantRegex + ").");
                 }
                 value = line.trim();
             } while (!value.matches(constantRegex));
@@ -186,15 +184,13 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         public int readIntegerValue(String prefixRegex, String suffixRegex) throws IOException {
             String line = bufferedReader.readLine();
             if (line == null) {
-                throw new IllegalArgumentException("File ends before a line is expected to contain an integer value ("
-                        + prefixRegex + "<value>" + suffixRegex + ").");
+                throw new IllegalArgumentException("File ends before a line is expected to contain an integer value (" + prefixRegex + "<value>" + suffixRegex + ").");
             }
             String value = removePrefixSuffixFromLine(line, prefixRegex, suffixRegex);
             try {
                 return Integer.parseInt(value);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Read line (" + line + ") is expected to contain an integer value ("
-                        + value + ").", e);
+                throw new IllegalArgumentException("Read line (" + line + ") is expected to contain an integer value (" + value + ").", e);
             }
         }
 
@@ -209,15 +205,13 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         public long readLongValue(String prefixRegex, String suffixRegex) throws IOException {
             String line = bufferedReader.readLine();
             if (line == null) {
-                throw new IllegalArgumentException("File ends before a line is expected to contain an integer value ("
-                        + prefixRegex + "<value>" + suffixRegex + ").");
+                throw new IllegalArgumentException("File ends before a line is expected to contain an integer value (" + prefixRegex + "<value>" + suffixRegex + ").");
             }
             String value = removePrefixSuffixFromLine(line, prefixRegex, suffixRegex);
             try {
                 return Long.parseLong(value);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Read line (" + line + ") is expected to contain an integer value ("
-                        + value + ").", e);
+                throw new IllegalArgumentException("Read line (" + line + ") is expected to contain an integer value (" + value + ").", e);
             }
         }
 
@@ -232,8 +226,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         public String readStringValue(String prefixRegex, String suffixRegex) throws IOException {
             String line = bufferedReader.readLine();
             if (line == null) {
-                throw new IllegalArgumentException("File ends before a line is expected to contain an string value ("
-                        + prefixRegex + "<value>" + suffixRegex + ").");
+                throw new IllegalArgumentException("File ends before a line is expected to contain an string value (" + prefixRegex + "<value>" + suffixRegex + ").");
             }
             return removePrefixSuffixFromLine(line, prefixRegex, suffixRegex);
         }
@@ -276,13 +269,11 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         public String removePrefixSuffixFromLine(String line, String prefixRegex, String suffixRegex) {
             String value = line.trim();
             if (!value.matches("^" + prefixRegex + ".*")) {
-                throw new IllegalArgumentException("Read line (" + line + ") is expected to start with prefixRegex ("
-                        + prefixRegex + ").");
+                throw new IllegalArgumentException("Read line (" + line + ") is expected to start with prefixRegex (" + prefixRegex + ").");
             }
             value = value.replaceAll("^" + prefixRegex + "(.*)", "$1");
             if (!value.matches(".*" + suffixRegex + "$")) {
-                throw new IllegalArgumentException("Read line (" + line + ") is expected to end with suffixRegex ("
-                        + suffixRegex + ").");
+                throw new IllegalArgumentException("Read line (" + line + ") is expected to end with suffixRegex (" + suffixRegex + ").");
             }
             value = value.replaceAll("(.*)" + suffixRegex + "$", "$1");
             value = value.trim();
@@ -305,8 +296,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
             return splitBy(line, "\\ ", "a space ( )", minimumNumberOfTokens, maximumNumberOfTokens, false, false);
         }
 
-        public String[] splitBySpace(String line, Integer minimumNumberOfTokens, Integer maximumNumberOfTokens,
-                boolean trim, boolean removeQuotes) {
+        public String[] splitBySpace(String line, Integer minimumNumberOfTokens, Integer maximumNumberOfTokens, boolean trim, boolean removeQuotes) {
             return splitBy(line, "\\ ", "a space ( )", minimumNumberOfTokens, maximumNumberOfTokens, trim, removeQuotes);
         }
 
@@ -319,8 +309,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
         }
 
         public String[] splitBySpacesOrTabs(String line, Integer minimumNumberOfTokens, Integer maximumNumberOfTokens) {
-            return splitBy(line, "[\\ \\t]+", "spaces or tabs", minimumNumberOfTokens, maximumNumberOfTokens,
-                    false, false);
+            return splitBy(line, "[\\ \\t]+", "spaces or tabs", minimumNumberOfTokens, maximumNumberOfTokens, false, false);
         }
 
         public String[] splitByPipelineAndTrim(String line, int numberOfTokens) {
@@ -343,13 +332,11 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
             return splitBy(line, "\\,", "a comma (,)", minimumNumberOfTokens, maximumNumberOfTokens, true, false);
         }
 
-        public String[] splitBy(String line, String delimiterRegex, String delimiterName,
-                Integer numberOfTokens, boolean trim, boolean removeQuotes) {
+        public String[] splitBy(String line, String delimiterRegex, String delimiterName, Integer numberOfTokens, boolean trim, boolean removeQuotes) {
             return splitBy(line, delimiterRegex, delimiterName, numberOfTokens, numberOfTokens, trim, removeQuotes);
         }
 
-        public String[] splitBy(String line, String delimiterRegex, String delimiterName,
-                Integer minimumNumberOfTokens, Integer maximumNumberOfTokens, boolean trim, boolean removeQuotes) {
+        public String[] splitBy(String line, String delimiterRegex, String delimiterName, Integer minimumNumberOfTokens, Integer maximumNumberOfTokens, boolean trim, boolean removeQuotes) {
             String[] lineTokens = line.split(delimiterRegex);
             if (removeQuotes) {
                 List<String> lineTokenList = new ArrayList<String>(lineTokens.length);
@@ -358,8 +345,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
                     while ((trim ? token.trim() : token).startsWith("\"") && !(trim ? token.trim() : token).endsWith("\"")) {
                         i++;
                         if (i >= lineTokens.length) {
-                            throw new IllegalArgumentException("The line (" + line
-                                    + ") has an invalid use of quotes (\").");
+                            throw new IllegalArgumentException("The line (" + line + ") has an invalid use of quotes (\").");
                         }
                         String delimiter;
                         if (delimiterRegex.equals("\\ ")) {
@@ -383,14 +369,10 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
                 lineTokens = lineTokenList.toArray(new String[0]);
             }
             if (minimumNumberOfTokens != null && lineTokens.length < minimumNumberOfTokens) {
-                throw new IllegalArgumentException("Read line (" + line + ") has " + lineTokens.length
-                        + " tokens but is expected to contain at least " + minimumNumberOfTokens
-                        + " tokens separated by " + delimiterName + ".");
+                throw new IllegalArgumentException("Read line (" + line + ") has " + lineTokens.length + " tokens but is expected to contain at least " + minimumNumberOfTokens + " tokens separated by " + delimiterName + ".");
             }
             if (maximumNumberOfTokens != null && lineTokens.length > maximumNumberOfTokens) {
-                throw new IllegalArgumentException("Read line (" + line + ") has " + lineTokens.length
-                        + " tokens but is expected to contain at most " + maximumNumberOfTokens
-                        + " tokens separated by " + delimiterName + ".");
+                throw new IllegalArgumentException("Read line (" + line + ") has " + lineTokens.length + " tokens but is expected to contain at most " + maximumNumberOfTokens + " tokens separated by " + delimiterName + ".");
             }
             if (trim) {
                 for (int i = 0; i < lineTokens.length; i++) {
@@ -406,8 +388,7 @@ public abstract class AbstractTxtSolutionImporter extends AbstractSolutionImport
             } else if (token.equals("1")) {
                 return true;
             } else {
-                throw new IllegalArgumentException("The token (" + token
-                        + ") is expected to be 0 or 1 representing a boolean.");
+                throw new IllegalArgumentException("The token (" + token + ") is expected to be 0 or 1 representing a boolean.");
             }
         }
 

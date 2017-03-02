@@ -38,15 +38,12 @@ public abstract class SolutionDaoTest extends LoggingTest {
         File dataDir = solutionDao.getDataDir();
         File unsolvedDataDir = new File(dataDir, "unsolved");
         if (!unsolvedDataDir.exists()) {
-            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath() + ") does not exist.");
         }
-        fileList.addAll(
-                FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
+        fileList.addAll(FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
         File solvedDataDir = new File(dataDir, "solved");
         if (solvedDataDir.exists()) {
-            fileList.addAll(
-                    FileUtils.listFiles(solvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
+            fileList.addAll(FileUtils.listFiles(solvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
         }
         Collections.sort(fileList, new ProblemFileComparator());
         List<Object[]> filesAsParameters = new ArrayList<Object[]>();

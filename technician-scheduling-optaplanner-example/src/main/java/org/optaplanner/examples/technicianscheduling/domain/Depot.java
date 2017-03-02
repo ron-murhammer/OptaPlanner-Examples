@@ -17,18 +17,15 @@
 package org.optaplanner.examples.technicianscheduling.domain;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamInclude;
 import org.optaplanner.examples.common.domain.AbstractPersistable;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 
-@XStreamAlias("VrpDepot")
-@XStreamInclude({
-        TimeWindowedDepot.class
-})
+@XStreamAlias("VrpTimeWindowedDepot")
 public class Depot extends AbstractPersistable {
 
     protected Location location;
+    private long readyTime;
+    private long dueTime;
 
     public Location getLocation() {
         return location;
@@ -56,6 +53,28 @@ public class Depot extends AbstractPersistable {
             return super.toString();
         }
         return location.getName();
+    }
+
+    /**
+     * @return a positive number, the time multiplied by 1000 to avoid floating point arithmetic rounding errors
+     */
+    public long getReadyTime() {
+        return readyTime;
+    }
+
+    public void setReadyTime(long readyTime) {
+        this.readyTime = readyTime;
+    }
+
+    /**
+     * @return a positive number, the time multiplied by 1000 to avoid floating point arithmetic rounding errors
+     */
+    public long getDueTime() {
+        return dueTime;
+    }
+
+    public void setDueTime(long dueTime) {
+        this.dueTime = dueTime;
     }
 
 }

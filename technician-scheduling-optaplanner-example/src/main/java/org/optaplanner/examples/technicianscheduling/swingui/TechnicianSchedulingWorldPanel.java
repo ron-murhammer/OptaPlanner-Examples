@@ -22,6 +22,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
 
 import org.optaplanner.examples.common.swingui.latitudelongitude.LatitudeLongitudeTranslator;
@@ -37,6 +38,7 @@ public class TechnicianSchedulingWorldPanel extends JPanel {
         this.vehicleRoutingPanel = vehicleRoutingPanel;
         solutionPainter = new TechnicianSchedulingSolutionPainter();
         addComponentListener(new ComponentAdapter() {
+
             @Override
             public void componentResized(ComponentEvent e) {
                 // TODO Not thread-safe during solving
@@ -47,6 +49,7 @@ public class TechnicianSchedulingWorldPanel extends JPanel {
             }
         });
         addMouseListener(new MouseAdapter() {
+
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON2 || e.getButton() == MouseEvent.BUTTON3) {

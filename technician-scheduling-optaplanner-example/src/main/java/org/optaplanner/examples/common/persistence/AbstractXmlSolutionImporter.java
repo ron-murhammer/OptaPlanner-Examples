@@ -41,12 +41,14 @@ public abstract class AbstractXmlSolutionImporter extends AbstractSolutionImport
         super(withoutDao);
     }
 
+    @Override
     public String getInputFileSuffix() {
         return DEFAULT_INPUT_FILE_SUFFIX;
     }
 
     public abstract XmlInputBuilder createXmlInputBuilder();
 
+    @Override
     public Solution readSolution(File inputFile) {
         Solution solution;
         InputStream in = null;
@@ -100,8 +102,7 @@ public abstract class AbstractXmlSolutionImporter extends AbstractSolutionImport
 
         protected void assertElementName(Element element, String name) {
             if (!element.getName().equals(name)) {
-                throw new IllegalStateException("Element name (" + element.getName()
-                        + ") should be " + name + ".");
+                throw new IllegalStateException("Element name (" + element.getName() + ") should be " + name + ".");
             }
         }
 

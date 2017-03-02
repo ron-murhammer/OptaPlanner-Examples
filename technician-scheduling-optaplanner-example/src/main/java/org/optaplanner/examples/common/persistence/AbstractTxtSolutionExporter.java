@@ -37,12 +37,14 @@ public abstract class AbstractTxtSolutionExporter extends AbstractSolutionExport
         super(withoutDao);
     }
 
+    @Override
     public String getOutputFileSuffix() {
         return DEFAULT_OUTPUT_FILE_SUFFIX;
     }
 
     public abstract TxtOutputBuilder createTxtOutputBuilder();
 
+    @Override
     public void writeSolution(Solution solution, File outputFile) {
         BufferedWriter bufferedWriter = null;
         try {

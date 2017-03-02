@@ -56,8 +56,7 @@ public abstract class AbstractSolutionExporter extends LoggingMain {
     public void convertAll() {
         File inputDir = getInputDir();
         if (!inputDir.exists()) {
-            throw new IllegalStateException("The directory inputDir (" + inputDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory inputDir (" + inputDir.getAbsolutePath() + ") does not exist.");
         }
         File outputDir = getOutputDir();
         outputDir.mkdirs();
@@ -67,9 +66,7 @@ public abstract class AbstractSolutionExporter extends LoggingMain {
             String inputFileName = inputFile.getName();
             if (inputFileName.endsWith("." + getInputFileSuffix())) {
                 Solution solution = solutionDao.readSolution(inputFile);
-                String outputFileName = inputFileName.substring(0,
-                        inputFileName.length() - getInputFileSuffix().length())
-                        + getOutputFileSuffix();
+                String outputFileName = inputFileName.substring(0, inputFileName.length() - getInputFileSuffix().length()) + getOutputFileSuffix();
                 File outputFile = new File(outputDir, outputFileName);
                 writeSolution(solution, outputFile);
             }

@@ -25,12 +25,7 @@ public class GeneralOptaPlannerBenchmarkApp extends CommonBenchmarkApp {
     }
 
     public GeneralOptaPlannerBenchmarkApp() {
-        super(
-                new ArgOption("default",
-                        "org/optaplanner/examples/app/benchmark/generalOptaPlannerBenchmarkConfig.xml"),
-                new ArgOption("template",
-                        "org/optaplanner/examples/app/benchmark/generalOptaPlannerBenchmarkConfigTemplate.xml.ftl", true)
-        );
+        super(new ArgOption("default", "org/optaplanner/examples/app/benchmark/generalOptaPlannerBenchmarkConfig.xml"), new ArgOption("template", "org/optaplanner/examples/app/benchmark/generalOptaPlannerBenchmarkConfigTemplate.xml.ftl", true));
     }
 
 }

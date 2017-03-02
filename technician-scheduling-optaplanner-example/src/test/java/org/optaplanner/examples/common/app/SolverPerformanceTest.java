@@ -16,6 +16,9 @@
 
 package org.optaplanner.examples.common.app;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.junit.Before;
@@ -27,8 +30,6 @@ import org.optaplanner.core.config.solver.EnvironmentMode;
 import org.optaplanner.core.config.solver.termination.TerminationConfig;
 import org.optaplanner.core.impl.score.director.InnerScoreDirectorFactory;
 import org.optaplanner.examples.common.persistence.SolutionDao;
-
-import static org.junit.Assert.*;
 
 /**
  * Runs an example solver.
@@ -80,8 +81,7 @@ public abstract class SolverPerformanceTest extends LoggingTest {
         Score bestScore = bestSolution.getScore();
         InnerScoreDirectorFactory scoreDirectorFactory = (InnerScoreDirectorFactory) solver.getScoreDirectorFactory();
         Score bestScoreLimit = scoreDirectorFactory.getScoreDefinition().parseScore(bestScoreLimitString);
-        assertTrue("The bestScore (" + bestScore + ") must be at least bestScoreLimit (" + bestScoreLimit + ").",
-                bestScore.compareTo(bestScoreLimit) >= 0);
+        assertTrue("The bestScore (" + bestScore + ") must be at least bestScoreLimit (" + bestScoreLimit + ").", bestScore.compareTo(bestScoreLimit) >= 0);
     }
 
 }

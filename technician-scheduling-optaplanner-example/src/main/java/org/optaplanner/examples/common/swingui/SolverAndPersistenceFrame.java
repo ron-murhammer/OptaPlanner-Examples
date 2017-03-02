@@ -22,8 +22,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -31,6 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -46,23 +45,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.io.FilenameUtils;
-import org.optaplanner.swing.impl.SwingUtils;
 import org.optaplanner.core.api.domain.solution.Solution;
 import org.optaplanner.core.api.score.FeasibilityScore;
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.impl.score.ScoreUtils;
 import org.optaplanner.examples.common.business.SolutionBusiness;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
+import org.optaplanner.swing.impl.SwingUtils;
 import org.optaplanner.swing.impl.TangoColorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,8 +69,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
 
     protected final transient Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final ImageIcon OPTA_PLANNER_ICON = new ImageIcon(
-            SolverAndPersistenceFrame.class.getResource("optaPlannerIcon.png"));
+    public static final ImageIcon OPTA_PLANNER_ICON = new ImageIcon(SolverAndPersistenceFrame.class.getResource("optaPlannerIcon.png"));
 
     private final SolutionBusiness<Solution_> solutionBusiness;
 
@@ -111,6 +108,8 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
     private void registerListeners() {
         solutionBusiness.registerForBestSolutionChanges(this);
         addWindowListener(new WindowAdapter() {
+
+            @Override
             public void windowClosing(WindowEvent e) {
                 // This async, so it doesn't stop the solving immediately
                 solutionBusiness.terminateSolvingEarly();
@@ -150,8 +149,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         JLabel quickOpenLabel = new JLabel("Quick open");
         quickOpenLabel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         quickOpenPanel.add(quickOpenLabel, BorderLayout.NORTH);
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                createQuickOpenUnsolvedPanel(), createQuickOpenSolvedPanel());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, createQuickOpenUnsolvedPanel(), createQuickOpenSolvedPanel());
         splitPane.setResizeWeight(0.8);
         splitPane.setBorder(null);
         quickOpenPanel.add(splitPane, BorderLayout.CENTER);
@@ -162,16 +160,14 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         quickOpenUnsolvedPanel = new JPanel();
         quickOpenUnsolvedActionList = new ArrayList<Action>();
         List<File> unsolvedFileList = solutionBusiness.getUnsolvedFileList();
-        return createQuickOpenPanel(quickOpenUnsolvedPanel, "Unsolved dataset", quickOpenUnsolvedActionList,
-                unsolvedFileList);
+        return createQuickOpenPanel(quickOpenUnsolvedPanel, "Unsolved dataset", quickOpenUnsolvedActionList, unsolvedFileList);
     }
 
     private JComponent createQuickOpenSolvedPanel() {
         quickOpenSolvedPanel = new JPanel();
         quickOpenSolvedActionList = new ArrayList<Action>();
         List<File> solvedFileList = solutionBusiness.getSolvedFileList();
-        return createQuickOpenPanel(quickOpenSolvedPanel, "Solved dataset", quickOpenSolvedActionList,
-                solvedFileList);
+        return createQuickOpenPanel(quickOpenSolvedPanel, "Solved dataset", quickOpenSolvedActionList, solvedFileList);
     }
 
     private JComponent createQuickOpenPanel(JPanel panel, String title, List<Action> quickOpenActionList, List<File> fileList) {
@@ -184,8 +180,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         scrollPane.setPreferredSize(new Dimension(180, 200));
         JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.add(scrollPane, BorderLayout.CENTER);
-        titlePanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(2, 2, 2, 2), BorderFactory.createTitledBorder(title)));
+        titlePanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2), BorderFactory.createTitledBorder(title)));
         return titlePanel;
     }
 
@@ -216,6 +211,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             this.file = file;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             try {
@@ -262,21 +258,8 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         solveButton.setMinimumSize(terminateSolvingEarlyButton.getMinimumSize());
         solveButton.setPreferredSize(terminateSolvingEarlyButton.getPreferredSize());
 
-        toolBarLayout.setHorizontalGroup(toolBarLayout.createSequentialGroup()
-                .addComponent(importButton)
-                .addComponent(openButton)
-                .addComponent(saveButton)
-                .addComponent(exportButton)
-                .addGap(10)
-                .addComponent(solvePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(progressBar, 20, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE));
-        toolBarLayout.setVerticalGroup(toolBarLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(importButton)
-                .addComponent(openButton)
-                .addComponent(saveButton)
-                .addComponent(exportButton)
-                .addComponent(solvePanel)
-                .addComponent(progressBar));
+        toolBarLayout.setHorizontalGroup(toolBarLayout.createSequentialGroup().addComponent(importButton).addComponent(openButton).addComponent(saveButton).addComponent(exportButton).addGap(10).addComponent(solvePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(progressBar, 20, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE));
+        toolBarLayout.setVerticalGroup(toolBarLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(importButton).addComponent(openButton).addComponent(saveButton).addComponent(exportButton).addComponent(solvePanel).addComponent(progressBar));
         return toolBar;
     }
 
@@ -286,6 +269,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             super("Solve", new ImageIcon(SolverAndPersistenceFrame.class.getResource("solveAction.png")));
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             setSolvingState(true);
             Solution_ planningProblem = solutionBusiness.getSolution();
@@ -328,10 +312,10 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
     private class TerminateSolvingEarlyAction extends AbstractAction {
 
         public TerminateSolvingEarlyAction() {
-            super("Terminate solving early",
-                    new ImageIcon(SolverAndPersistenceFrame.class.getResource("terminateSolvingEarlyAction.png")));
+            super("Terminate solving early", new ImageIcon(SolverAndPersistenceFrame.class.getResource("terminateSolvingEarlyAction.png")));
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             terminateSolvingEarlyAction.setEnabled(false);
             progressBar.setString("Terminating...");
@@ -350,10 +334,13 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             super(NAME, new ImageIcon(SolverAndPersistenceFrame.class.getResource("openAction.png")));
             fileChooser = new JFileChooser(solutionBusiness.getSolvedDataDir());
             fileChooser.setFileFilter(new FileFilter() {
+
+                @Override
                 public boolean accept(File file) {
                     return file.isDirectory() || file.getName().endsWith(".xml");
                 }
 
+                @Override
                 public String getDescription() {
                     return "Solution XStream XML files";
                 }
@@ -361,6 +348,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             fileChooser.setDialogTitle(NAME);
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             int approved = fileChooser.showOpenDialog(SolverAndPersistenceFrame.this);
             if (approved == JFileChooser.APPROVE_OPTION) {
@@ -385,10 +373,13 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             super(NAME, new ImageIcon(SolverAndPersistenceFrame.class.getResource("saveAction.png")));
             fileChooser = new JFileChooser(solutionBusiness.getSolvedDataDir());
             fileChooser.setFileFilter(new FileFilter() {
+
+                @Override
                 public boolean accept(File file) {
                     return file.isDirectory() || file.getName().endsWith(".xml");
                 }
 
+                @Override
                 public String getDescription() {
                     return "Solution XStream XML files";
                 }
@@ -396,9 +387,9 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             fileChooser.setDialogTitle(NAME);
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
-            fileChooser.setSelectedFile(new File(solutionBusiness.getSolvedDataDir(),
-                    FilenameUtils.getBaseName(solutionBusiness.getSolutionFileName()) + ".xml"));
+            fileChooser.setSelectedFile(new File(solutionBusiness.getSolvedDataDir(), FilenameUtils.getBaseName(solutionBusiness.getSolutionFileName()) + ".xml"));
             int approved = fileChooser.showSaveDialog(SolverAndPersistenceFrame.this);
             if (approved == JFileChooser.APPROVE_OPTION) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -407,11 +398,9 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
                 } finally {
                     setCursor(Cursor.getDefaultCursor());
                 }
-                refreshQuickOpenPanel(quickOpenUnsolvedPanel, quickOpenUnsolvedActionList,
-                        solutionBusiness.getUnsolvedFileList());
-                refreshQuickOpenPanel(quickOpenSolvedPanel, quickOpenSolvedActionList,
-                        solutionBusiness.getSolvedFileList());
-                SolverAndPersistenceFrame.this.validate();
+                refreshQuickOpenPanel(quickOpenUnsolvedPanel, quickOpenUnsolvedActionList, solutionBusiness.getUnsolvedFileList());
+                refreshQuickOpenPanel(quickOpenSolvedPanel, quickOpenSolvedActionList, solutionBusiness.getSolvedFileList());
+                validate();
             }
         }
 
@@ -434,10 +423,13 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
                 FileFilter filter;
                 if (importer.isInputFileDirectory()) {
                     filter = new FileFilter() {
+
+                        @Override
                         public boolean accept(File file) {
                             return file.isDirectory();
                         }
 
+                        @Override
                         public String getDescription() {
                             return "Import directory";
                         }
@@ -445,10 +437,13 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
                     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 } else {
                     filter = new FileFilter() {
+
+                        @Override
                         public boolean accept(File file) {
                             return file.isDirectory() || importer.acceptInputFile(file);
                         }
 
+                        @Override
                         public String getDescription() {
                             return "Import files (*." + importer.getInputFileSuffix() + ")";
                         }
@@ -463,6 +458,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             fileChooser.setDialogTitle(NAME);
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             int approved = fileChooser.showOpenDialog(SolverAndPersistenceFrame.this);
             if (approved == JFileChooser.APPROVE_OPTION) {
@@ -492,10 +488,13 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             }
             fileChooser = new JFileChooser(solutionBusiness.getExportDataDir());
             fileChooser.setFileFilter(new FileFilter() {
+
+                @Override
                 public boolean accept(File file) {
                     return file.isDirectory() || file.getName().endsWith("." + solutionBusiness.getExportFileSuffix());
                 }
 
+                @Override
                 public String getDescription() {
                     return "Export files (*." + solutionBusiness.getExportFileSuffix() + ")";
                 }
@@ -503,11 +502,9 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             fileChooser.setDialogTitle(NAME);
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
-            fileChooser.setSelectedFile(new File(solutionBusiness.getExportDataDir(),
-                    FilenameUtils.getBaseName(solutionBusiness.getSolutionFileName())
-                            + "." + solutionBusiness.getExportFileSuffix()
-            ));
+            fileChooser.setSelectedFile(new File(solutionBusiness.getExportDataDir(), FilenameUtils.getBaseName(solutionBusiness.getSolutionFileName()) + "." + solutionBusiness.getExportFileSuffix()));
             int approved = fileChooser.showSaveDialog(SolverAndPersistenceFrame.this);
             if (approved == JFileChooser.APPROVE_OPTION) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -535,8 +532,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         JTextArea descriptionTextArea = new JTextArea(8, 70);
         descriptionTextArea.setEditable(false);
         descriptionTextArea.setText(solutionBusiness.getAppDescription());
-        descriptionPanel.add(new JScrollPane(descriptionTextArea,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
+        descriptionPanel.add(new JScrollPane(descriptionTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
         usageExplanationPanel.add(descriptionPanel, BorderLayout.SOUTH);
         middlePanel.add(usageExplanationPanel, "usageExplanationPanel");
         JComponent wrappedSolutionPanel;
@@ -560,8 +556,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
         scoreField.setForeground(Color.BLACK);
         scoreField.setBorder(BorderFactory.createLoweredBevelBorder());
         scorePanel.add(scoreField, BorderLayout.CENTER);
-        refreshScreenDuringSolvingCheckBox = new JCheckBox("Refresh screen during solving",
-                solutionPanel.isRefreshScreenDuringSolving());
+        refreshScreenDuringSolvingCheckBox = new JCheckBox("Refresh screen during solving", solutionPanel.isRefreshScreenDuringSolving());
         scorePanel.add(refreshScreenDuringSolvingCheckBox, BorderLayout.EAST);
         return scorePanel;
     }
@@ -572,6 +567,7 @@ public class SolverAndPersistenceFrame<Solution_ extends Solution> extends JFram
             super("Constraint matches", new ImageIcon(SolverAndPersistenceFrame.class.getResource("showConstraintMatchesDialogAction.png")));
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             constraintMatchesDialog.resetContentPanel();
             constraintMatchesDialog.setVisible(true);

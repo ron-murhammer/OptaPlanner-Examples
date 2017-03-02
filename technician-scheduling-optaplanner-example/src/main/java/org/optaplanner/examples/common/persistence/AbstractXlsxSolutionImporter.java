@@ -27,9 +27,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.optaplanner.core.api.domain.solution.Solution;
 
 public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImporter {
@@ -44,12 +41,14 @@ public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImpor
         super(withoutDao);
     }
 
+    @Override
     public String getInputFileSuffix() {
         return DEFAULT_INPUT_FILE_SUFFIX;
     }
 
     public abstract XslxInputBuilder createXslxInputBuilder();
 
+    @Override
     public Solution readSolution(File inputFile) {
         Solution solution;
         InputStream in = null;
@@ -85,7 +84,7 @@ public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImpor
         }
 
         public void setWorkbook(XSSFWorkbook document) {
-            this.workbook = document;
+            workbook = document;
         }
 
         public abstract Solution readSolution() throws IOException;
@@ -101,26 +100,22 @@ public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImpor
         protected XSSFSheet readSheet(int index, String name) {
             XSSFSheet sheet = workbook.getSheetAt(index);
             if (!sheet.getSheetName().equals(name)) {
-                throw new IllegalArgumentException("The sheet (" + sheet.getSheetName() + ") at index (" + index
-                        + ") is expected to have another name (" + name + ")");
+                throw new IllegalArgumentException("The sheet (" + sheet.getSheetName() + ") at index (" + index + ") is expected to have another name (" + name + ")");
             }
             return sheet;
         }
 
         protected void assertCellConstant(Cell cell, String constant) {
             if (!constant.equals(cell.getStringCellValue())) {
-                throw new IllegalArgumentException("The cell (" + cell.getRow().getRowNum() + ","
-                        + cell.getColumnIndex() + ") with value (" + cell.getStringCellValue()
-                        + ") is expected to have the constant (" + constant + ")");
+                throw new IllegalArgumentException("The cell (" + cell.getRow().getRowNum() + "," + cell.getColumnIndex() + ") with value (" + cell.getStringCellValue() + ") is expected to have the constant (" + constant + ")");
             }
         }
 
         protected long readLongCell(Cell cell) {
             double d = cell.getNumericCellValue();
             long l = (long) d;
-            if (d - (double) l != 0.0) {
-                throw new IllegalArgumentException("The keyCell (" + cell.getRow().getRowNum() + ","
-                        + cell.getColumnIndex() + ") with value (" + d + ") is expected to be a long.");
+            if (d - l != 0.0) {
+                throw new IllegalArgumentException("The keyCell (" + cell.getRow().getRowNum() + "," + cell.getColumnIndex() + ") with value (" + d + ") is expected to be a long.");
             }
             return l;
         }
@@ -136,9 +131,7 @@ public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImpor
         protected String readStringParameter(Row row, String key) {
             Cell keyCell = row.getCell(0);
             if (!key.equals(keyCell.getStringCellValue())) {
-                throw new IllegalArgumentException("The keyCell (" + keyCell.getRow().getRowNum() + ","
-                        + keyCell.getColumnIndex() + ") with value (" + keyCell.getStringCellValue()
-                        + ") is expected to have the key (" + key + ")");
+                throw new IllegalArgumentException("The keyCell (" + keyCell.getRow().getRowNum() + "," + keyCell.getColumnIndex() + ") with value (" + keyCell.getStringCellValue() + ") is expected to have the key (" + key + ")");
             }
             Cell valueCell = row.getCell(1);
             return valueCell.getStringCellValue();
@@ -147,9 +140,7 @@ public abstract class AbstractXlsxSolutionImporter extends AbstractSolutionImpor
         protected double readDoubleParameter(Row row, String key) {
             Cell keyCell = row.getCell(0);
             if (!key.equals(keyCell.getStringCellValue())) {
-                throw new IllegalArgumentException("The keyCell (" + keyCell.getRow().getRowNum() + ","
-                        + keyCell.getColumnIndex() + ") with value (" + keyCell.getStringCellValue()
-                        + ") is expected to have the key (" + key + ")");
+                throw new IllegalArgumentException("The keyCell (" + keyCell.getRow().getRowNum() + "," + keyCell.getColumnIndex() + ") with value (" + keyCell.getStringCellValue() + ") is expected to have the key (" + key + ")");
             }
             Cell valueCell = row.getCell(1);
             return valueCell.getNumericCellValue();

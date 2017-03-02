@@ -37,6 +37,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
     private long hardScore;
     private long softScore;
 
+    @Override
     public void resetWorkingSolution(TechnicianSchedulingSolution solution) {
         timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
         List<Technician> vehicleList = solution.getTechnicianList();
@@ -56,10 +57,12 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         }
     }
 
+    @Override
     public void beforeEntityAdded(Object entity) {
         // Do nothing
     }
 
+    @Override
     public void afterEntityAdded(Object entity) {
         if (entity instanceof Technician) {
             return;
@@ -72,40 +75,43 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         }
     }
 
+    @Override
     public void beforeVariableChanged(Object entity, String variableName) {
         if (entity instanceof Technician) {
             return;
         }
         if (variableName.equals("previousStandstill")) {
             retractPreviousStandstill((Task) entity);
-        } else if (variableName.equals("vehicle"))   {
+        } else if (variableName.equals("vehicle")) {
             retractVehicle((Task) entity);
-        } else if (variableName.equals("nextCustomer"))   {
+        } else if (variableName.equals("nextCustomer")) {
             retractNextCustomer((Task) entity);
-        } else if (variableName.equals("arrivalTime"))   {
+        } else if (variableName.equals("arrivalTime")) {
             retractArrivalTime((TimeWindowedTask) entity);
         } else {
             throw new IllegalArgumentException("Unsupported variableName (" + variableName + ").");
         }
     }
 
+    @Override
     public void afterVariableChanged(Object entity, String variableName) {
         if (entity instanceof Technician) {
             return;
         }
         if (variableName.equals("previousStandstill")) {
             insertPreviousStandstill((Task) entity);
-        } else if (variableName.equals("vehicle"))   {
+        } else if (variableName.equals("vehicle")) {
             insertVehicle((Task) entity);
-        } else if (variableName.equals("nextCustomer"))   {
+        } else if (variableName.equals("nextCustomer")) {
             insertNextCustomer((Task) entity);
-        } else if (variableName.equals("arrivalTime"))   {
+        } else if (variableName.equals("arrivalTime")) {
             insertArrivalTime((TimeWindowedTask) entity);
         } else {
             throw new IllegalArgumentException("Unsupported variableName (" + variableName + ").");
         }
     }
 
+    @Override
     public void beforeEntityRemoved(Object entity) {
         if (entity instanceof Technician) {
             return;
@@ -118,6 +124,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         }
     }
 
+    @Override
     public void afterEntityRemoved(Object entity) {
         // Do nothing
     }
@@ -203,6 +210,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         }
     }
 
+    @Override
     public HardSoftLongScore calculateScore() {
         return HardSoftLongScore.valueOf(hardScore, softScore);
     }

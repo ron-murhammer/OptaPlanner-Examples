@@ -16,9 +16,7 @@
 
 package org.optaplanner.examples.technicianscheduling.solver.score;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
@@ -31,6 +29,7 @@ import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWin
 
 public class TechnicianSchedulingEasyScoreCalculator implements EasyScoreCalculator<TechnicianSchedulingSolution> {
 
+    @Override
     public HardSoftLongScore calculateScore(TechnicianSchedulingSolution solution) {
         boolean timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
         List<Task> taskList = solution.getTaskList();

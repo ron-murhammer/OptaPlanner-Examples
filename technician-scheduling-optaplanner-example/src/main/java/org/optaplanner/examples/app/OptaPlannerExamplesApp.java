@@ -40,6 +40,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import org.optaplanner.examples.common.app.CommonApp;
@@ -84,7 +86,7 @@ public class OptaPlannerExamplesApp extends JFrame {
     private Container createContentPane() {
         JPanel contentPane = new JPanel(new BorderLayout(5, 5));
         contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        JLabel titleLabel = new JLabel("Which example do you want to see?", JLabel.CENTER);
+        JLabel titleLabel = new JLabel("Which example do you want to see?", SwingConstants.CENTER);
         titleLabel.setFont(titleLabel.getFont().deriveFont(20.0f));
         contentPane.add(titleLabel, BorderLayout.NORTH);
         JScrollPane examplesScrollPane = new JScrollPane(createExamplesPanel());
@@ -106,16 +108,8 @@ public class OptaPlannerExamplesApp extends JFrame {
         JPanel basicExamplesPanel = createBasicExamplesPanel();
         JPanel realExamplesPanel = createRealExamplesPanel();
         JPanel difficultExamplesPanel = createDifficultExamplesPanel();
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-                .addComponent(basicExamplesPanel)
-                .addGap(10)
-                .addComponent(realExamplesPanel)
-                .addGap(10)
-                .addComponent(difficultExamplesPanel));
-        layout.setVerticalGroup(layout.createParallelGroup()
-                .addComponent(basicExamplesPanel)
-                .addComponent(realExamplesPanel)
-                .addComponent(difficultExamplesPanel));
+        layout.setHorizontalGroup(layout.createSequentialGroup().addComponent(basicExamplesPanel).addGap(10).addComponent(realExamplesPanel).addGap(10).addComponent(difficultExamplesPanel));
+        layout.setVerticalGroup(layout.createParallelGroup().addComponent(basicExamplesPanel).addComponent(realExamplesPanel).addComponent(difficultExamplesPanel));
         return examplesPanel;
     }
 
@@ -123,8 +117,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Basic examples");
         titledBorder.setTitleColor(TangoColorFactory.CHAMELEON_3);
-        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder,
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         return panel;
     }
 
@@ -132,8 +125,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Real examples");
         titledBorder.setTitleColor(TangoColorFactory.BUTTER_3);
-        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder,
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         panel.add(createExampleButton(new TechnicianSchedulingApp()));
         return panel;
     }
@@ -142,8 +134,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Difficult examples");
         titledBorder.setTitleColor(TangoColorFactory.SCARLET_3);
-        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder,
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        panel.setBorder(BorderFactory.createCompoundBorder(titledBorder, BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         return panel;
     }
 
@@ -151,19 +142,23 @@ public class OptaPlannerExamplesApp extends JFrame {
         String iconResource = commonApp.getIconResource();
         Icon icon = iconResource == null ? new EmptyIcon() : new ImageIcon(getClass().getResource(iconResource));
         JButton button = new JButton(new AbstractAction(commonApp.getName(), icon) {
+
+            @Override
             public void actionPerformed(ActionEvent e) {
                 commonApp.init(OptaPlannerExamplesApp.this, false);
             }
         });
-        button.setHorizontalAlignment(JButton.LEFT);
-        button.setHorizontalTextPosition(JButton.RIGHT);
-        button.setVerticalTextPosition(JButton.CENTER);
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setHorizontalTextPosition(SwingConstants.RIGHT);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
         button.addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseEntered(MouseEvent e) {
                 descriptionTextArea.setText(commonApp.getDescription());
             }
 
+            @Override
             public void mouseExited(MouseEvent e) {
                 descriptionTextArea.setText("");
             }
@@ -185,8 +180,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         descriptionTextArea.setEditable(false);
         descriptionTextArea.setLineWrap(true);
         descriptionTextArea.setWrapStyleWord(true);
-        descriptionPanel.add(new JScrollPane(descriptionTextArea,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
+        descriptionPanel.add(new JScrollPane(descriptionTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
         return descriptionPanel;
     }
 
@@ -195,6 +189,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         extraPanel.add(new JPanel());
         webExamplesDialog = new WebExamplesDialog();
         Action webExamplesAction = new AbstractAction("Show web examples") {
+
             @Override
             public void actionPerformed(ActionEvent event) {
                 webExamplesDialog.setLocationRelativeTo(OptaPlannerExamplesApp.this);
@@ -237,6 +232,7 @@ public class OptaPlannerExamplesApp extends JFrame {
             contentPanel.add(createMiddlePanel(), BorderLayout.CENTER);
             JPanel buttonPanel = new JPanel(new FlowLayout());
             Action okAction = new AbstractAction("OK") {
+
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setVisible(false);

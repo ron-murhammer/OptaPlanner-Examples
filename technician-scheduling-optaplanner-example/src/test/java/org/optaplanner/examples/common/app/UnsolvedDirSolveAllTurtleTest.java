@@ -35,11 +35,9 @@ public abstract class UnsolvedDirSolveAllTurtleTest extends SolveAllTurtleTest {
         File dataDir = solutionDao.getDataDir();
         File unsolvedDataDir = new File(dataDir, "unsolved");
         if (!unsolvedDataDir.exists()) {
-            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory unsolvedDataDir (" + unsolvedDataDir.getAbsolutePath() + ") does not exist.");
         } else {
-            List<File> fileList = new ArrayList<File>(
-                    FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
+            List<File> fileList = new ArrayList<File>(FileUtils.listFiles(unsolvedDataDir, new String[]{solutionDao.getFileExtension()}, true));
             Collections.sort(fileList, new ProblemFileComparator());
             for (File file : fileList) {
                 filesAsParameters.add(new Object[]{file});
@@ -62,6 +60,7 @@ public abstract class UnsolvedDirSolveAllTurtleTest extends SolveAllTurtleTest {
 
     protected abstract SolutionDao createSolutionDao();
 
+    @Override
     protected Solution readPlanningProblem() {
         return solutionDao.readSolution(dataFile);
     }

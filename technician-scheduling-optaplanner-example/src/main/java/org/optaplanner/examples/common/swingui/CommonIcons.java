@@ -22,6 +22,7 @@ public class CommonIcons {
 
     public static ImageIcon LOCKED_ICON = new ImageIcon(CommonIcons.class.getResource("locked.png"));
 
-    private CommonIcons() {}
+    private CommonIcons() {
+    }
 
 }

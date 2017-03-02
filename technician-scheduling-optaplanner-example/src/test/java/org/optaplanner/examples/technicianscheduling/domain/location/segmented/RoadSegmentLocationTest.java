@@ -16,15 +16,13 @@
 
 package org.optaplanner.examples.technicianscheduling.domain.location.segmented;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Test;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.location.segmented.HubSegmentLocation;
-import org.optaplanner.examples.technicianscheduling.domain.location.segmented.RoadSegmentLocation;
-
-import static org.junit.Assert.*;
 
 public class RoadSegmentLocationTest {
 
@@ -85,8 +83,7 @@ public class RoadSegmentLocationTest {
         return map;
     }
 
-    protected Map<RoadSegmentLocation, Double> createNearbyTravelDistanceMap(Location fromLocation,
-            RoadSegmentLocation... toLocations) {
+    protected Map<RoadSegmentLocation, Double> createNearbyTravelDistanceMap(Location fromLocation, RoadSegmentLocation... toLocations) {
         Map<RoadSegmentLocation, Double> map = new LinkedHashMap<RoadSegmentLocation, Double>(toLocations.length);
         for (RoadSegmentLocation toLocation : toLocations) {
             map.put(toLocation, fromLocation.getAirDistanceDoubleTo(toLocation));

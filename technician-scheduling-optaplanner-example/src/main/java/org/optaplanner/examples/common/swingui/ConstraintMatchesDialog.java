@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Set;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -50,8 +51,7 @@ public class ConstraintMatchesDialog extends JDialog {
 
     protected final SolutionBusiness solutionBusiness;
 
-    public ConstraintMatchesDialog(SolverAndPersistenceFrame solverAndPersistenceFrame,
-            SolutionBusiness solutionBusiness) {
+    public ConstraintMatchesDialog(SolverAndPersistenceFrame solverAndPersistenceFrame, SolutionBusiness solutionBusiness) {
         super(solverAndPersistenceFrame, "Constraint matches", true);
         this.solutionBusiness = solutionBusiness;
     }
@@ -59,6 +59,7 @@ public class ConstraintMatchesDialog extends JDialog {
     public void resetContentPanel() {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         Action okAction = new AbstractAction("OK") {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -72,8 +73,7 @@ public class ConstraintMatchesDialog extends JDialog {
             unsupportedPanel.add(buttonPanel, BorderLayout.SOUTH);
             setContentPane(unsupportedPanel);
         } else {
-            final List<ConstraintMatchTotal> constraintMatchTotalList
-                    = solutionBusiness.getConstraintMatchTotalList();
+            final List<ConstraintMatchTotal> constraintMatchTotalList = solutionBusiness.getConstraintMatchTotalList();
             JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
             final JTable table = new JTable(new ConstraintMatchTotalTableModel(constraintMatchTotalList));
             TableColumnModel columnModel = table.getColumnModel();
@@ -92,21 +92,20 @@ public class ConstraintMatchesDialog extends JDialog {
             final JTextArea detailTextArea = new JTextArea(10, 80);
             JScrollPane detailScrollPane = new JScrollPane(detailTextArea);
             bottomPanel.add(detailScrollPane, BorderLayout.CENTER);
-            table.getSelectionModel().addListSelectionListener(
-                    new ListSelectionListener() {
-                        public void valueChanged(ListSelectionEvent event) {
-                            int selectedRow = table.getSelectedRow();
-                            if (selectedRow < 0) {
-                                detailTextArea.setText("");
-                            } else {
-                                ConstraintMatchTotal constraintMatchTotal
-                                        = constraintMatchTotalList.get(selectedRow);
-                                detailTextArea.setText(buildConstraintMatchSetText(constraintMatchTotal));
-                                detailTextArea.setCaretPosition(0);
-                            }
-                        }
+            table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow < 0) {
+                        detailTextArea.setText("");
+                    } else {
+                        ConstraintMatchTotal constraintMatchTotal = constraintMatchTotalList.get(selectedRow);
+                        detailTextArea.setText(buildConstraintMatchSetText(constraintMatchTotal));
+                        detailTextArea.setCaretPosition(0);
                     }
-            );
+                }
+            });
             bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
             splitPane.setBottomComponent(bottomPanel);
             splitPane.setResizeWeight(1.0);
@@ -133,14 +132,17 @@ public class ConstraintMatchesDialog extends JDialog {
             this.constraintMatchTotalList = constraintMatchTotalList;
         }
 
+        @Override
         public int getRowCount() {
             return constraintMatchTotalList.size();
         }
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
 
+        @Override
         public String getColumnName(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -158,6 +160,7 @@ public class ConstraintMatchesDialog extends JDialog {
             }
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
@@ -175,6 +178,7 @@ public class ConstraintMatchesDialog extends JDialog {
             }
         }
 
+        @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             ConstraintMatchTotal constraintMatchTotal = constraintMatchTotalList.get(rowIndex);
             switch (columnIndex) {

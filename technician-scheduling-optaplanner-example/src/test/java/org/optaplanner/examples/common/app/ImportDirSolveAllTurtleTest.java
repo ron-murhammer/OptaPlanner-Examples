@@ -34,11 +34,9 @@ public abstract class ImportDirSolveAllTurtleTest extends SolveAllTurtleTest {
         List<Object[]> filesAsParameters = new ArrayList<Object[]>();
         File importDataDir = solutionImporter.getInputDir();
         if (!importDataDir.exists()) {
-            throw new IllegalStateException("The directory importDataDir (" + importDataDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory importDataDir (" + importDataDir.getAbsolutePath() + ") does not exist.");
         } else {
-            List<File> fileList = new ArrayList<File>(
-                    FileUtils.listFiles(importDataDir, new String[]{solutionImporter.getInputFileSuffix()}, true));
+            List<File> fileList = new ArrayList<File>(FileUtils.listFiles(importDataDir, new String[]{solutionImporter.getInputFileSuffix()}, true));
             Collections.sort(fileList, new ProblemFileComparator());
             for (File file : fileList) {
                 filesAsParameters.add(new Object[]{file});
@@ -61,6 +59,7 @@ public abstract class ImportDirSolveAllTurtleTest extends SolveAllTurtleTest {
 
     protected abstract AbstractSolutionImporter createSolutionImporter();
 
+    @Override
     protected Solution readPlanningProblem() {
         return solutionImporter.readSolution(dataFile);
     }

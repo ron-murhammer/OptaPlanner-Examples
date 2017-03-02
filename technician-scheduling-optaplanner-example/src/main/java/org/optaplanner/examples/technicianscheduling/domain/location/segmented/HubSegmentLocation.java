@@ -18,10 +18,9 @@ package org.optaplanner.examples.technicianscheduling.domain.location.segmented;
 
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Assistant for {@link RoadSegmentLocation}.
@@ -63,7 +62,7 @@ public class HubSegmentLocation extends Location {
         if (location instanceof RoadSegmentLocation) {
             distance = getDistanceDouble((RoadSegmentLocation) location);
         } else {
-            distance = hubTravelDistanceMap.get((HubSegmentLocation) location);
+            distance = hubTravelDistanceMap.get(location);
         }
         // Multiplied by 1000 to avoid floating point arithmetic rounding errors
         return (long) (distance * 1000.0 + 0.5);

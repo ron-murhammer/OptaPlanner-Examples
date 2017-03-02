@@ -38,6 +38,7 @@ public interface Standstill {
      */
     @InverseRelationShadowVariable(sourceVariableName = "previousStandstill")
     Task getNextTask();
+
     void setNextTask(Task nextTask);
 
 }

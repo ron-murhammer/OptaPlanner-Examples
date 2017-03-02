@@ -16,6 +16,8 @@
 
 package org.optaplanner.examples.common.app;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,21 +32,17 @@ import org.optaplanner.core.api.solver.Solver;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.examples.common.persistence.SolutionDao;
 
-import static org.junit.Assert.*;
-
 @RunWith(Parameterized.class)
 public abstract class PhaseTest extends LoggingTest {
 
-    protected static <Enum_ extends Enum> Collection<Object[]> buildParameters(SolutionDao solutionDao,
-            Enum_[] types, String... unsolvedFileNames) {
+    protected static <Enum_ extends Enum> Collection<Object[]> buildParameters(SolutionDao solutionDao, Enum_[] types, String... unsolvedFileNames) {
         List<Object[]> filesAsParameters = new ArrayList<Object[]>(unsolvedFileNames.length * types.length);
         File dataDir = solutionDao.getDataDir();
         File unsolvedDataDir = new File(dataDir, "unsolved");
         for (String unsolvedFileName : unsolvedFileNames) {
             File unsolvedFile = new File(unsolvedDataDir, unsolvedFileName);
             if (!unsolvedFile.exists()) {
-                throw new IllegalStateException("The directory unsolvedFile (" + unsolvedFile.getAbsolutePath()
-                        + ") does not exist.");
+                throw new IllegalStateException("The directory unsolvedFile (" + unsolvedFile.getAbsolutePath() + ") does not exist.");
             }
             for (Enum_ type : types) {
                 filesAsParameters.add(new Object[]{unsolvedFile, type});

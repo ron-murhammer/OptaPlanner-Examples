@@ -36,7 +36,6 @@ import org.optaplanner.examples.technicianscheduling.domain.location.Location;
 import org.optaplanner.examples.technicianscheduling.domain.location.RoadLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.segmented.HubSegmentLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.segmented.RoadSegmentLocation;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
@@ -67,6 +66,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
         return TechnicianSchedulingFileIO.FILE_EXTENSION;
     }
 
+    @Override
     public TxtInputBuilder createTxtInputBuilder() {
         return new VehicleRoutingInputBuilder();
     }
@@ -82,6 +82,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
         private Map<Long, Location> locationMap;
         private List<Depot> depotList;
 
+        @Override
         public Solution readSolution() throws IOException {
             String firstLine = readStringValue();
             if (firstLine.matches("\\s*NAME\\s*:.*")) {
@@ -107,14 +108,8 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 solution.setName(firstLine);
                 readTimeWindowedFormat();
             }
-            BigInteger possibleSolutionSize
-                    = factorial(customerListSize + vehicleListSize - 1).divide(factorial(vehicleListSize - 1));
-            logger.info("VehicleRoutingSolution {} has {} depots, {} vehicles and {} customers with a search space of {}.",
-                    getInputId(),
-                    solution.getDepotList().size(),
-                    solution.getTechnicianList().size(),
-                    solution.getTaskList().size(),
-                    getFlooredPossibleSolutionSize(possibleSolutionSize));
+            BigInteger possibleSolutionSize = factorial(customerListSize + vehicleListSize - 1).divide(factorial(vehicleListSize - 1));
+            logger.info("VehicleRoutingSolution {} has {} depots, {} vehicles and {} customers with a search space of {}.", getInputId(), solution.getDepotList().size(), solution.getTechnicianList().size(), solution.getTaskList().size(), getFlooredPossibleSolutionSize(possibleSolutionSize));
             return solution;
         }
 
@@ -208,8 +203,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                         location = new RoadSegmentLocation();
                         break;
                     default:
-                        throw new IllegalStateException("The distanceType (" + distanceType
-                                + ") is not implemented.");
+                        throw new IllegalStateException("The distanceType (" + distanceType + ") is not implemented.");
 
                 }
                 location.setId(Long.parseLong(lineTokens[0]));
@@ -232,8 +226,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                         double travelDistance = Double.parseDouble(lineTokens[j]);
                         if (i == j) {
                             if (travelDistance != 0.0) {
-                                throw new IllegalStateException("The travelDistance (" + travelDistance
-                                        + ") should be zero.");
+                                throw new IllegalStateException("The travelDistance (" + travelDistance + ") should be zero.");
                             }
                         } else {
                             RoadLocation otherLocation = (RoadLocation) customerLocationList.get(j);
@@ -301,22 +294,20 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 int demand = Integer.parseInt(lineTokens[1]);
                 // Depots have no demand
                 if (demand == 0) {
-                    Depot depot = timewindowed ? new TimeWindowedDepot() : new Depot();
+                    Depot depot = new Depot();
                     depot.setId(id);
                     Location location = locationMap.get(id);
                     if (location == null) {
-                        throw new IllegalArgumentException("The depot with id (" + id
-                                + ") has no location (" + location + ").");
+                        throw new IllegalArgumentException("The depot with id (" + id + ") has no location (" + location + ").");
                     }
                     depot.setLocation(location);
                     if (timewindowed) {
-                        TimeWindowedDepot timeWindowedDepot = (TimeWindowedDepot) depot;
+                        Depot timeWindowedDepot = depot;
                         timeWindowedDepot.setReadyTime(Long.parseLong(lineTokens[2]));
                         timeWindowedDepot.setDueTime(Long.parseLong(lineTokens[3]));
                         long serviceDuration = Long.parseLong(lineTokens[4]);
                         if (serviceDuration != 0L) {
-                            throw new IllegalArgumentException("The depot with id (" + id
-                                    + ") has a serviceDuration (" + serviceDuration + ") that is not 0.");
+                            throw new IllegalArgumentException("The depot with id (" + id + ") has a serviceDuration (" + serviceDuration + ") that is not 0.");
                         }
                     }
                     depotList.add(depot);
@@ -325,8 +316,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                     customer.setId(id);
                     Location location = locationMap.get(id);
                     if (location == null) {
-                        throw new IllegalArgumentException("The customer with id (" + id
-                                + ") has no location (" + location + ").");
+                        throw new IllegalArgumentException("The customer with id (" + id + ") has no location (" + location + ").");
                     }
                     customer.setLocation(location);
                     if (timewindowed) {
@@ -352,8 +342,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 id = readLongValue();
             }
             if (depotCount != depotList.size()) {
-                throw new IllegalStateException("The number of demands with 0 demand (" + depotList.size()
-                        + ") differs from the number of depots (" + depotCount + ").");
+                throw new IllegalStateException("The number of demands with 0 demand (" + depotList.size() + ") differs from the number of depots (" + depotCount + ").");
             }
         }
 
@@ -364,15 +353,13 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
             } else {
                 String inputFileNameRegex = "^.+\\-k(\\d+)\\.vrp$";
                 if (!inputFileName.matches(inputFileNameRegex)) {
-                    throw new IllegalArgumentException("The inputFileName (" + inputFileName
-                            + ") does not match the inputFileNameRegex (" + inputFileNameRegex + ").");
+                    throw new IllegalArgumentException("The inputFileName (" + inputFileName + ") does not match the inputFileNameRegex (" + inputFileNameRegex + ").");
                 }
                 String vehicleListSizeString = inputFileName.replaceAll(inputFileNameRegex, "$1");
                 try {
                     vehicleListSize = Integer.parseInt(vehicleListSizeString);
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("The inputFileName (" + inputFileName
-                            + ") has a vehicleListSizeString (" + vehicleListSizeString + ") that is not a number.", e);
+                    throw new IllegalArgumentException("The inputFileName (" + inputFileName + ") has a vehicleListSizeString (" + vehicleListSizeString + ") that is not a number.", e);
                 }
             }
             createVehicleList();
@@ -466,7 +453,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
             int locationListSizeEstimation = 25;
             List<Location> locationList = new ArrayList<Location>(locationListSizeEstimation);
             depotList = new ArrayList<Depot>(1);
-            TimeWindowedDepot depot = null;
+            Depot depot = null;
             List<Task> customerList = new ArrayList<Task>(locationListSizeEstimation);
             boolean first = true;
             while (line != null && !line.trim().isEmpty()) {
@@ -482,18 +469,16 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 long dueTime = Long.parseLong(lineTokens[5]) * 1000L;
                 long serviceDuration = Long.parseLong(lineTokens[6]) * 1000L;
                 if (first) {
-                    depot = new TimeWindowedDepot();
+                    depot = new Depot();
                     depot.setId(id);
                     depot.setLocation(location);
                     if (demand != 0) {
-                        throw new IllegalArgumentException("The depot with id (" + id
-                                + ") has a demand (" + demand + ").");
+                        throw new IllegalArgumentException("The depot with id (" + id + ") has a demand (" + demand + ").");
                     }
                     depot.setReadyTime(readyTime);
                     depot.setDueTime(dueTime);
                     if (serviceDuration != 0) {
-                        throw new IllegalArgumentException("The depot with id (" + id
-                                + ") has a serviceDuration (" + serviceDuration + ").");
+                        throw new IllegalArgumentException("The depot with id (" + id + ") has a serviceDuration (" + serviceDuration + ").");
                     }
                     depotList.add(depot);
                     first = false;
@@ -503,12 +488,9 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                     customer.setLocation(location);
                     customer.setReadyTime(readyTime);
                     // Score constraint arrivalAfterDueTimeAtDepot is a build-in hard constraint in VehicleRoutingImporter
-                    long maximumDueTime = depot.getDueTime()
-                            - serviceDuration - location.getDistanceTo(depot.getLocation());
+                    long maximumDueTime = depot.getDueTime() - serviceDuration - location.getDistanceTo(depot.getLocation());
                     if (dueTime > maximumDueTime) {
-                        logger.warn("The customer ({})'s dueTime ({}) was automatically reduced" +
-                                " to maximumDueTime ({}) because of the depot's dueTime ({}).",
-                                customer, dueTime, maximumDueTime, depot.getDueTime());
+                        logger.warn("The customer ({})'s dueTime ({}) was automatically reduced" + " to maximumDueTime ({}) because of the depot's dueTime ({}).", customer, dueTime, maximumDueTime, depot.getDueTime());
                         dueTime = maximumDueTime;
                     }
                     customer.setDueTime(dueTime);

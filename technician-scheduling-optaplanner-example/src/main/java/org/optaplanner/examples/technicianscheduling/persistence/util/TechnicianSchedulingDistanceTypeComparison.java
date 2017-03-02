@@ -38,10 +38,7 @@ public class TechnicianSchedulingDistanceTypeComparison extends LoggingMain {
     private final ScoreDirectorFactory scoreDirectorFactory;
 
     public static void main(String[] args) {
-        new TechnicianSchedulingDistanceTypeComparison().compare(
-                "solved/tmp-p-belgium-n50-k10.xml",
-                "solved/tmp-p-belgium-road-km-n50-k10.xml",
-                "solved/tmp-p-belgium-road-time-n50-k10.xml");
+        new TechnicianSchedulingDistanceTypeComparison().compare("solved/tmp-p-belgium-n50-k10.xml", "solved/tmp-p-belgium-road-km-n50-k10.xml", "solved/tmp-p-belgium-road-time-n50-k10.xml");
     }
 
     protected final TechnicianSchedulingDao vehicleRoutingDao;
@@ -99,9 +96,7 @@ public class TechnicianSchedulingDistanceTypeComparison extends LoggingMain {
         for (Task varCustomer : varSolution.getTaskList()) {
             Task inputCustomer = inputCustomerMap.get(varCustomer.getId());
             Standstill varPrevious = varCustomer.getPreviousStandstill();
-            inputCustomer.setPreviousStandstill(varPrevious == null ? null :
-                    varPrevious instanceof Technician ? inputVehicleMap.get(((Technician) varPrevious).getId())
-                    : inputCustomerMap.get(((Task) varPrevious).getId()));
+            inputCustomer.setPreviousStandstill(varPrevious == null ? null : varPrevious instanceof Technician ? inputVehicleMap.get(((Technician) varPrevious).getId()) : inputCustomerMap.get(((Task) varPrevious).getId()));
             Task varNext = varCustomer.getNextTask();
             inputCustomer.setNextTask(varNext == null ? null : inputCustomerMap.get(varNext.getId()));
         }

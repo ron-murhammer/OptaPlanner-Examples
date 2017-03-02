@@ -22,7 +22,6 @@ import java.util.Collection;
 import org.junit.runners.Parameterized;
 import org.optaplanner.examples.common.persistence.SolutionDao;
 import org.optaplanner.examples.common.persistence.SolutionDaoTest;
-import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingDao;
 
 public class TechnicianSchedulingDaoTest extends SolutionDaoTest {
 

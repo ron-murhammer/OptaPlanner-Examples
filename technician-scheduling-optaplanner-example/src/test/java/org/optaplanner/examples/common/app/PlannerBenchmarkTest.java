@@ -61,19 +61,16 @@ public abstract class PlannerBenchmarkTest extends LoggingTest {
         // On Windows, getPath() contains backslashes instead of normal slashes
         String prefix = "local" + File.separator + "data" + File.separator;
         if (!benchmarkDirectoryPath.startsWith(prefix)) {
-            throw new IllegalStateException("The benchmarkDirectoryPath (" + benchmarkDirectoryPath
-                    + ") should start with prefix (" + prefix + ")");
+            throw new IllegalStateException("The benchmarkDirectoryPath (" + benchmarkDirectoryPath + ") should start with prefix (" + prefix + ")");
         }
-        plannerBenchmarkConfig.setBenchmarkDirectory(new File(benchmarkDirectoryPath.replace(prefix,
-                "target" + File.separator + "test" + File.separator + "data" + File.separator)));
+        plannerBenchmarkConfig.setBenchmarkDirectory(new File(benchmarkDirectoryPath.replace(prefix, "target" + File.separator + "test" + File.separator + "data" + File.separator)));
         plannerBenchmarkConfig.setWarmUpHoursSpentLimit(0L);
         plannerBenchmarkConfig.setWarmUpMinutesSpentLimit(0L);
         plannerBenchmarkConfig.setWarmUpSecondsSpentLimit(WARM_UP_SECONDS_SPENT);
         plannerBenchmarkConfig.setWarmUpMillisecondsSpentLimit(0L);
         List<SolverBenchmarkConfig> solverBenchmarkConfigList = plannerBenchmarkConfig.getSolverBenchmarkConfigList();
         if (ConfigUtils.isEmptyCollection(solverBenchmarkConfigList)) {
-            throw new IllegalStateException("The benchmarkConfigResource (" + benchmarkConfigResource
-                    + ") should have at least 1 solverBenchmarkConfig.");
+            throw new IllegalStateException("The benchmarkConfigResource (" + benchmarkConfigResource + ") should have at least 1 solverBenchmarkConfig.");
         }
         if (solverBenchmarkConfigList.size() > MAXIMUM_SOLVER_BENCHMARK_SIZE) {
             solverBenchmarkConfigList = solverBenchmarkConfigList.subList(0, MAXIMUM_SOLVER_BENCHMARK_SIZE);
@@ -87,8 +84,7 @@ public abstract class PlannerBenchmarkTest extends LoggingTest {
                 problemBenchmarksConfig = new ProblemBenchmarksConfig();
                 inheritedSolverBenchmarkConfig.setProblemBenchmarksConfig(problemBenchmarksConfig);
             }
-            problemBenchmarksConfig.setInputSolutionFileList(
-                    Collections.singletonList(unsolvedDataFile));
+            problemBenchmarksConfig.setInputSolutionFileList(Collections.singletonList(unsolvedDataFile));
             TerminationConfig terminationConfig = new TerminationConfig();
             terminationConfig.setSecondsSpentLimit(maximumSecondsSpentPerSolverBenchmark);
             inheritedSolverBenchmarkConfig.getSolverConfig().setTerminationConfig(terminationConfig);

@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.optaplanner.core.api.score.Score;
 import org.optaplanner.core.impl.phase.custom.AbstractCustomPhaseCommand;
-import org.optaplanner.core.impl.phase.custom.CustomPhaseCommand;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
@@ -39,6 +38,7 @@ public class BuoyTechnicianSchedulingSolutionInitializer extends AbstractCustomP
 
     protected final transient Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Override
     public void changeWorkingSolution(ScoreDirector scoreDirector) {
         TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) scoreDirector.getWorkingSolution();
         List<Technician> vehicleList = solution.getTechnicianList();
@@ -51,6 +51,7 @@ public class BuoyTechnicianSchedulingSolutionInitializer extends AbstractCustomP
         for (final Standstill origin : standstillList) {
             Task[] nearbyCustomers = customerList.toArray(new Task[0]);
             Arrays.sort(nearbyCustomers, new Comparator<Standstill>() {
+
                 @Override
                 public int compare(Standstill a, Standstill b) {
                     double aDistance = origin.getLocation().getDistanceTo(a.getLocation());

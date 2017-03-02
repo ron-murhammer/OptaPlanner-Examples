@@ -23,7 +23,6 @@ import org.junit.runners.Parameterized;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import org.optaplanner.examples.common.app.ImportDirSolveAllTurtleTest;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
-import org.optaplanner.examples.technicianscheduling.app.TechnicianSchedulingApp;
 import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 import org.optaplanner.examples.technicianscheduling.solver.score.TechnicianSchedulingEasyScoreCalculator;
 

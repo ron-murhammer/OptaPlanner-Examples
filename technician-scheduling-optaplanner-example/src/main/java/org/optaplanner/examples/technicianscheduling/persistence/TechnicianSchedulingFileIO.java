@@ -27,18 +27,22 @@ public class TechnicianSchedulingFileIO implements SolutionFileIO {
 
     private TechnicianSchedulingImporter importer = new TechnicianSchedulingImporter();
 
+    @Override
     public String getInputFileExtension() {
         return FILE_EXTENSION;
     }
 
+    @Override
     public String getOutputFileExtension() {
         return FILE_EXTENSION;
     }
 
+    @Override
     public Solution read(File inputSolutionFile) {
         return importer.readSolution(inputSolutionFile);
     }
 
+    @Override
     public void write(Solution solution, File outputSolutionFile) {
         throw new UnsupportedOperationException();
     }

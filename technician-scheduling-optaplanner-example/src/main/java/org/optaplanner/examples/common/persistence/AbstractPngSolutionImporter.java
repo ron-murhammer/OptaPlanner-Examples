@@ -16,10 +16,8 @@
 
 package org.optaplanner.examples.common.persistence;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -41,12 +39,14 @@ public abstract class AbstractPngSolutionImporter extends AbstractSolutionImport
         super(withoutDao);
     }
 
+    @Override
     public String getInputFileSuffix() {
         return DEFAULT_INPUT_FILE_SUFFIX;
     }
 
     public abstract PngInputBuilder createPngInputBuilder();
 
+    @Override
     public Solution readSolution(File inputFile) {
         Solution solution;
         InputStream in = null;

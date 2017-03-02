@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Ignore;
 import org.optaplanner.core.api.domain.solution.Solution;
 import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.config.constructionheuristic.ConstructionHeuristicPhaseConfig;
@@ -33,25 +32,24 @@ import org.optaplanner.examples.common.persistence.SolutionDao;
 public abstract class ConstructionHeuristicTest extends PhaseTest {
 
     protected static Collection<Object[]> buildParameters(SolutionDao solutionDao, String... unsolvedFileNames) {
-        return buildParameters(solutionDao, ConstructionHeuristicType.values(),
-                unsolvedFileNames);
+        return buildParameters(solutionDao, ConstructionHeuristicType.values(), unsolvedFileNames);
     }
 
     protected ConstructionHeuristicType constructionHeuristicType;
 
-    protected ConstructionHeuristicTest(File dataFile,
-            ConstructionHeuristicType constructionHeuristicType) {
+    protected ConstructionHeuristicTest(File dataFile, ConstructionHeuristicType constructionHeuristicType) {
         super(dataFile);
         this.constructionHeuristicType = constructionHeuristicType;
     }
 
+    @Override
     protected SolverFactory<Solution> buildSolverFactory() {
         SolverFactory<Solution> solverFactory = SolverFactory.createFromXmlResource(createSolverConfigResource());
         SolverConfig solverConfig = solverFactory.getSolverConfig();
         solverConfig.setTerminationConfig(new TerminationConfig());
         ConstructionHeuristicPhaseConfig constructionHeuristicPhaseConfig = new ConstructionHeuristicPhaseConfig();
         constructionHeuristicPhaseConfig.setConstructionHeuristicType(constructionHeuristicType);
-        solverConfig.setPhaseConfigList(Arrays.<PhaseConfig>asList(constructionHeuristicPhaseConfig));
+        solverConfig.setPhaseConfigList(Arrays.<PhaseConfig> asList(constructionHeuristicPhaseConfig));
         return solverFactory;
     }
 

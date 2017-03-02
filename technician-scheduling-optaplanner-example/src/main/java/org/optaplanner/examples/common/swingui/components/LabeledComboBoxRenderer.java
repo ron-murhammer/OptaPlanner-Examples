@@ -17,12 +17,10 @@
 package org.optaplanner.examples.common.swingui.components;
 
 import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
+
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 /**
  * Display the user-friendly {@link Labeled#getLabel()} instead of the developer-friendly {@link Object#toString()}.
@@ -40,8 +38,7 @@ public class LabeledComboBoxRenderer implements ListCellRenderer {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-            boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         String label = (value == null) ? "" : ((Labeled) value).getLabel();
         return originalListCellRenderer.getListCellRendererComponent(list, label, index, isSelected, cellHasFocus);
     }

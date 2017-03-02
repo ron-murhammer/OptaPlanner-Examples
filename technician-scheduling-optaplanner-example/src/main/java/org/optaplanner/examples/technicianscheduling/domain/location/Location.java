@@ -18,14 +18,11 @@ package org.optaplanner.examples.technicianscheduling.domain.location;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamInclude;
-import org.apache.commons.lang3.ObjectUtils;
 import org.optaplanner.examples.common.domain.AbstractPersistable;
 import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
 @XStreamAlias("VrpLocation")
-@XStreamInclude({
-        AirLocation.class,
-        RoadLocation.class
+@XStreamInclude({AirLocation.class, RoadLocation.class
 })
 public abstract class Location extends AbstractPersistable {
 
@@ -83,8 +80,7 @@ public abstract class Location extends AbstractPersistable {
         // Euclidean distance (Pythagorean theorem) - not correct when the surface is a sphere
         double latitudeDifference = location.latitude - latitude;
         double longitudeDifference = location.longitude - longitude;
-        return Math.sqrt(
-                (latitudeDifference * latitudeDifference) + (longitudeDifference * longitudeDifference));
+        return Math.sqrt((latitudeDifference * latitudeDifference) + (longitudeDifference * longitudeDifference));
     }
 
     /**
@@ -98,7 +94,6 @@ public abstract class Location extends AbstractPersistable {
         double longitudeDifference = location.longitude - longitude;
         return Math.atan2(latitudeDifference, longitudeDifference);
     }
-
 
     @Override
     public String toString() {

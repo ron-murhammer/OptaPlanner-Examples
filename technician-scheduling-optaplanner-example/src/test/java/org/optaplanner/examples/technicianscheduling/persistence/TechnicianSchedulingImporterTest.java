@@ -22,7 +22,6 @@ import java.util.Collection;
 import org.junit.runners.Parameterized;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
 import org.optaplanner.examples.common.persistence.SolutionImporterTest;
-import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 
 public class TechnicianSchedulingImporterTest extends SolutionImporterTest {
 

@@ -36,10 +36,12 @@ public class Technician extends AbstractPersistable implements Standstill {
         this.depot = depot;
     }
 
+    @Override
     public Task getNextTask() {
         return nextTask;
     }
 
+    @Override
     public void setNextTask(Task nextTask) {
         this.nextTask = nextTask;
     }
@@ -48,10 +50,12 @@ public class Technician extends AbstractPersistable implements Standstill {
     // Complex methods
     // ************************************************************************
 
+    @Override
     public Technician getTechnician() {
         return this;
     }
 
+    @Override
     public Location getLocation() {
         return depot.getLocation();
     }

@@ -16,29 +16,27 @@
 
 package org.optaplanner.examples.common.persistence;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.IOException;
 
 import org.junit.Test;
 import org.optaplanner.core.api.domain.solution.Solution;
-
-import static org.junit.Assert.*;
 
 public class AbstractTxtSolutionImporterTest {
 
     @Test
     public void splitBySpace() {
         AbstractTxtSolutionImporter.TxtInputBuilder inputBuilder = new AbstractTxtSolutionImporter.TxtInputBuilder() {
+
             @Override
             public Solution readSolution() throws IOException {
                 return null;
             }
         };
-        assertArrayEquals(new String[]{"one", "two", "three"},
-                inputBuilder.splitBySpace("one two three"));
-        assertArrayEquals(new String[]{"one", "two", "three"},
-                inputBuilder.splitBySpace("one two \"three\"", null, null, false, true));
-        assertArrayEquals(new String[]{"one", "two three"},
-                inputBuilder.splitBySpace("one \"two three\"", null, null, false, true));
+        assertArrayEquals(new String[]{"one", "two", "three"}, inputBuilder.splitBySpace("one two three"));
+        assertArrayEquals(new String[]{"one", "two", "three"}, inputBuilder.splitBySpace("one two \"three\"", null, null, false, true));
+        assertArrayEquals(new String[]{"one", "two three"}, inputBuilder.splitBySpace("one \"two three\"", null, null, false, true));
     }
 
 }

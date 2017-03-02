@@ -29,8 +29,7 @@ import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWin
 
 @PlanningEntity(difficultyWeightFactoryClass = DepotAngleCustomerDifficultyWeightFactory.class)
 @XStreamAlias("VrpCustomer")
-@XStreamInclude({
-        TimeWindowedTask.class
+@XStreamInclude({TimeWindowedTask.class
 })
 public class Task extends AbstractPersistable implements Standstill {
 
@@ -43,6 +42,7 @@ public class Task extends AbstractPersistable implements Standstill {
     protected Task nextTask;
     protected Technician technician;
 
+    @Override
     public Location getLocation() {
         return location;
     }
@@ -51,8 +51,7 @@ public class Task extends AbstractPersistable implements Standstill {
         this.location = location;
     }
 
-    @PlanningVariable(valueRangeProviderRefs = {"vehicleRange", "customerRange"},
-            graphType = PlanningVariableGraphType.CHAINED)
+    @PlanningVariable(valueRangeProviderRefs = {"vehicleRange", "customerRange"}, graphType = PlanningVariableGraphType.CHAINED)
     public Standstill getPreviousStandstill() {
         return previousStandstill;
     }
@@ -61,14 +60,17 @@ public class Task extends AbstractPersistable implements Standstill {
         this.previousStandstill = previousStandstill;
     }
 
+    @Override
     public Task getNextTask() {
         return nextTask;
     }
 
+    @Override
     public void setNextTask(Task nextTask) {
         this.nextTask = nextTask;
     }
 
+    @Override
     @AnchorShadowVariable(sourceVariableName = "previousStandstill")
     public Technician getTechnician() {
         return technician;
@@ -87,8 +89,7 @@ public class Task extends AbstractPersistable implements Standstill {
      */
     public long getDistanceFromPreviousStandstill() {
         if (previousStandstill == null) {
-            throw new IllegalStateException("This method must not be called when the previousStandstill ("
-                    + previousStandstill + ") is not initialized yet.");
+            throw new IllegalStateException("This method must not be called when the previousStandstill (" + previousStandstill + ") is not initialized yet.");
         }
         return getDistanceFrom(previousStandstill);
     }

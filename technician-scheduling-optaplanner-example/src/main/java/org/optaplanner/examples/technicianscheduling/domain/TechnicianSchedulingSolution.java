@@ -38,8 +38,7 @@ import org.optaplanner.persistence.xstream.impl.score.XStreamScoreConverter;
 
 @PlanningSolution
 @XStreamAlias("VrpVehicleRoutingSolution")
-@XStreamInclude({
-        TimeWindowedTechnicianSchedulingSolution.class
+@XStreamInclude({TimeWindowedTechnicianSchedulingSolution.class
 })
 public class TechnicianSchedulingSolution extends AbstractPersistable implements Solution<HardSoftLongScore> {
 
@@ -114,10 +113,12 @@ public class TechnicianSchedulingSolution extends AbstractPersistable implements
         this.taskList = taskList;
     }
 
+    @Override
     public HardSoftLongScore getScore() {
         return score;
     }
 
+    @Override
     public void setScore(HardSoftLongScore score) {
         this.score = score;
     }
@@ -126,6 +127,7 @@ public class TechnicianSchedulingSolution extends AbstractPersistable implements
     // Complex methods
     // ************************************************************************
 
+    @Override
     public Collection<? extends Object> getProblemFacts() {
         List<Object> facts = new ArrayList<Object>();
         facts.addAll(locationList);
@@ -138,9 +140,9 @@ public class TechnicianSchedulingSolution extends AbstractPersistable implements
         if (score == null) {
             return null;
         }
-        long distance = - score.getSoftScore();
+        long distance = -score.getSoftScore();
         if (distanceUnitOfMeasurement == null) {
-            return numberFormat.format(((double) distance) / 1000.0);
+            return numberFormat.format((distance) / 1000.0);
         }
         if (distanceUnitOfMeasurement.equals("sec")) { // TODO why are the values 1000 larger?
             long hours = distance / 3600000L;
@@ -157,7 +159,7 @@ public class TechnicianSchedulingSolution extends AbstractPersistable implements
             long meter = distance % 1000L;
             return km + "km " + meter + "m";
         } else {
-            return numberFormat.format(((double) distance) / 1000.0) + " " + distanceUnitOfMeasurement;
+            return numberFormat.format((distance) / 1000.0) + " " + distanceUnitOfMeasurement;
         }
     }
 

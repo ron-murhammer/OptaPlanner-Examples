@@ -38,8 +38,7 @@ public abstract class AbstractSolutionImporter extends LoggingMain {
         this.solutionDao = solutionDao;
         inputDir = new File(solutionDao.getDataDir(), "import");
         if (!inputDir.exists()) {
-            throw new IllegalStateException("The directory inputDir (" + inputDir.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The directory inputDir (" + inputDir.getAbsolutePath() + ") does not exist.");
         }
         outputDir = new File(solutionDao.getDataDir(), "unsolved");
     }
@@ -77,9 +76,7 @@ public abstract class AbstractSolutionImporter extends LoggingMain {
         for (File inputFile : inputFiles) {
             if (acceptInputFile(inputFile) && acceptInputFileDuringBulkConvert(inputFile)) {
                 String inputFileName = inputFile.getName();
-                String outputFileName = inputFileName.substring(0,
-                        inputFileName.length() - getInputFileSuffix().length())
-                        + getOutputFileSuffix();
+                String outputFileName = inputFileName.substring(0, inputFileName.length() - getInputFileSuffix().length()) + getOutputFileSuffix();
                 File outputFile = new File(outputDir, outputFileName);
                 convert(inputFile, outputFile);
             }
@@ -89,8 +86,7 @@ public abstract class AbstractSolutionImporter extends LoggingMain {
     public void convert(String inputFileName, String outputFileName) {
         File inputFile = new File(inputDir, inputFileName);
         if (!inputFile.exists()) {
-            throw new IllegalStateException("The file inputFile (" + inputFile.getAbsolutePath()
-                    + ") does not exist.");
+            throw new IllegalStateException("The file inputFile (" + inputFile.getAbsolutePath() + ") does not exist.");
         }
         File outputFile = new File(outputDir, outputFileName);
         outputFile.getParentFile().mkdirs();

@@ -25,14 +25,7 @@ public class TechnicianSchedulingBenchmarkApp extends CommonBenchmarkApp {
     }
 
     public TechnicianSchedulingBenchmarkApp() {
-        super(
-                new ArgOption("default",
-                        "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingBenchmarkConfig.xml"),
-                new ArgOption("stepLimit",
-                        "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingStepLimitBenchmarkConfig.xml"),
-                new ArgOption("template",
-                        "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingBenchmarkConfigTemplate.xml.ftl", true)
-        );
+        super(new ArgOption("default", "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingBenchmarkConfig.xml"), new ArgOption("stepLimit", "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingStepLimitBenchmarkConfig.xml"), new ArgOption("template", "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingBenchmarkConfigTemplate.xml.ftl", true));
     }
 
 }

@@ -18,20 +18,20 @@ package org.optaplanner.examples.technicianscheduling.swingui;
 
 import java.awt.BorderLayout;
 import java.util.Random;
+
 import javax.swing.JTabbedPane;
 
 import org.optaplanner.core.api.domain.solution.Solution;
-import org.optaplanner.core.impl.heuristic.move.Move;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 import org.optaplanner.core.impl.solver.ProblemFactChange;
 import org.optaplanner.core.impl.solver.random.RandomUtils;
 import org.optaplanner.examples.common.swingui.SolutionPanel;
 import org.optaplanner.examples.common.swingui.SolverAndPersistenceFrame;
+import org.optaplanner.examples.technicianscheduling.domain.Depot;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
@@ -67,6 +67,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
         return (TechnicianSchedulingSolution) solutionBusiness.getSolution();
     }
 
+    @Override
     public void resetPanel(Solution solutionObject) {
         TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) solutionObject;
         vehicleRoutingWorldPanel.resetPanel(solution);
@@ -106,8 +107,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
                 logger.warn("Adding locations for a segmented road distance dataset is not supported.");
                 return;
             default:
-                throw new IllegalStateException("The distanceType (" + getVehicleRoutingSolution().getDistanceType()
-                        + ") is not implemented.");
+                throw new IllegalStateException("The distanceType (" + getVehicleRoutingSolution().getDistanceType() + ") is not implemented.");
         }
         newLocation.setId(nextLocationId);
         nextLocationId++;
@@ -115,6 +115,8 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
         newLocation.setLatitude(latitude);
         logger.info("Scheduling insertion of newLocation ({}).", newLocation);
         doProblemFactChange(new ProblemFactChange() {
+
+            @Override
             public void doChange(ScoreDirector scoreDirector) {
                 TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) scoreDirector.getWorkingSolution();
                 scoreDirector.beforeProblemFactAdded(newLocation);
@@ -133,7 +135,7 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
         Task newCustomer;
         if (solution instanceof TimeWindowedTechnicianSchedulingSolution) {
             TimeWindowedTask newTimeWindowedCustomer = new TimeWindowedTask();
-            TimeWindowedDepot timeWindowedDepot = (TimeWindowedDepot) solution.getDepotList().get(0);
+            Depot timeWindowedDepot = solution.getDepotList().get(0);
             long windowTime = (timeWindowedDepot.getDueTime() - timeWindowedDepot.getReadyTime()) / 4L;
             long readyTime = RandomUtils.nextLong(demandRandom, windowTime * 3L);
             newTimeWindowedCustomer.setReadyTime(readyTime);

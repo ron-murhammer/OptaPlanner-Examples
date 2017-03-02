@@ -35,25 +35,24 @@ import org.optaplanner.examples.common.persistence.SolutionDao;
 public abstract class ExhaustiveSearchTest extends PhaseTest {
 
     protected static Collection<Object[]> buildParameters(SolutionDao solutionDao, String... unsolvedFileNames) {
-        return buildParameters(solutionDao, ExhaustiveSearchType.values(),
-                unsolvedFileNames);
+        return buildParameters(solutionDao, ExhaustiveSearchType.values(), unsolvedFileNames);
     }
 
     protected ExhaustiveSearchType exhaustiveSearchType;
 
-    protected ExhaustiveSearchTest(File dataFile,
-            ExhaustiveSearchType exhaustiveSearchType) {
+    protected ExhaustiveSearchTest(File dataFile, ExhaustiveSearchType exhaustiveSearchType) {
         super(dataFile);
         this.exhaustiveSearchType = exhaustiveSearchType;
     }
 
+    @Override
     protected SolverFactory<Solution> buildSolverFactory() {
         SolverFactory<Solution> solverFactory = SolverFactory.createFromXmlResource(createSolverConfigResource());
         SolverConfig solverConfig = solverFactory.getSolverConfig();
         solverConfig.setTerminationConfig(new TerminationConfig());
         ExhaustiveSearchPhaseConfig exhaustiveSearchPhaseConfig = new ExhaustiveSearchPhaseConfig();
         exhaustiveSearchPhaseConfig.setExhaustiveSearchType(exhaustiveSearchType);
-        solverConfig.setPhaseConfigList(Arrays.<PhaseConfig>asList(exhaustiveSearchPhaseConfig));
+        solverConfig.setPhaseConfigList(Arrays.<PhaseConfig> asList(exhaustiveSearchPhaseConfig));
         return solverFactory;
     }
 

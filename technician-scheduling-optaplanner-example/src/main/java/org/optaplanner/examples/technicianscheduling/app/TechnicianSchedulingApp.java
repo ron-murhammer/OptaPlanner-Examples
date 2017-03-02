@@ -27,8 +27,7 @@ import org.optaplanner.examples.technicianscheduling.swingui.TechnicianSchedulin
 
 public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolution> {
 
-    public static final String SOLVER_CONFIG
-            = "org/optaplanner/examples/technicianscheduling/solver/technicianSchedulingSolverConfig.xml";
+    public static final String SOLVER_CONFIG = "org/optaplanner/examples/technicianscheduling/solver/technicianSchedulingSolverConfig.xml";
 
     public static void main(String[] args) {
         prepareSwingEnvironment();
@@ -36,10 +35,7 @@ public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolut
     }
 
     public TechnicianSchedulingApp() {
-        super("Technician Scheduling",
-                "Schedule technicians optimally across tasks that have locations and time windows",
-                SOLVER_CONFIG,
-                TechnicianSchedulingPanel.LOGO_PATH);
+        super("Technician Scheduling", "Schedule technicians optimally across tasks that have locations and time windows", SOLVER_CONFIG, TechnicianSchedulingPanel.LOGO_PATH);
     }
 
     @Override
@@ -54,8 +50,7 @@ public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolut
 
     @Override
     protected AbstractSolutionImporter[] createSolutionImporters() {
-        return new AbstractSolutionImporter[]{
-                new TechnicianSchedulingImporter()
+        return new AbstractSolutionImporter[]{new TechnicianSchedulingImporter()
         };
     }
 

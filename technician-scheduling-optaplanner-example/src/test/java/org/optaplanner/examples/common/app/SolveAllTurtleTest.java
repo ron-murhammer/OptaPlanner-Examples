@@ -16,6 +16,8 @@
 
 package org.optaplanner.examples.common.app;
 
+import static org.junit.Assume.assumeTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -27,8 +29,6 @@ import org.optaplanner.core.config.solver.EnvironmentMode;
 import org.optaplanner.core.config.solver.SolverConfig;
 import org.optaplanner.core.config.solver.termination.TerminationConfig;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
-
-import static org.junit.Assume.*;
 
 /**
  * Turtle tests are not run by default. They are only run if <code>-DrunTurtleTests=true</code> because it takes days.
@@ -58,8 +58,7 @@ public abstract class SolveAllTurtleTest extends LoggingTest {
         planningProblem = buildAndSolve(solverFactory, EnvironmentMode.NON_INTRUSIVE_FULL_ASSERT, planningProblem, 3L);
     }
 
-    protected Solution buildAndSolve(SolverFactory<Solution> solverFactory, EnvironmentMode environmentMode,
-            Solution planningProblem, long maximumMinutesSpent) {
+    protected Solution buildAndSolve(SolverFactory<Solution> solverFactory, EnvironmentMode environmentMode, Solution planningProblem, long maximumMinutesSpent) {
         SolverConfig solverConfig = solverFactory.getSolverConfig();
         solverConfig.getTerminationConfig().setMinutesSpentLimit(maximumMinutesSpent);
         solverConfig.setEnvironmentMode(environmentMode);
@@ -67,8 +66,7 @@ public abstract class SolveAllTurtleTest extends LoggingTest {
         if (easyScoreCalculatorClass != null && environmentMode.isAsserted()) {
             ScoreDirectorFactoryConfig assertionScoreDirectorFactoryConfig = new ScoreDirectorFactoryConfig();
             assertionScoreDirectorFactoryConfig.setEasyScoreCalculatorClass(easyScoreCalculatorClass);
-            solverConfig.getScoreDirectorFactoryConfig().setAssertionScoreDirectorFactory(
-                    assertionScoreDirectorFactoryConfig);
+            solverConfig.getScoreDirectorFactoryConfig().setAssertionScoreDirectorFactory(assertionScoreDirectorFactoryConfig);
         }
         Solver<Solution> solver = solverFactory.buildSolver();
         Solution bestSolution = solver.solve(planningProblem);
@@ -79,7 +77,7 @@ public abstract class SolveAllTurtleTest extends LoggingTest {
         return bestSolution;
     }
 
-    protected Class<? extends EasyScoreCalculator> overwritingEasyScoreCalculatorClass()  {
+    protected Class<? extends EasyScoreCalculator> overwritingEasyScoreCalculatorClass() {
         return null;
     }
 
