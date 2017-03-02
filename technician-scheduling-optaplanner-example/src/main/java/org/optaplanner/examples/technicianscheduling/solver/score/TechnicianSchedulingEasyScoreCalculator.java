@@ -24,14 +24,12 @@ import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
 import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
 public class TechnicianSchedulingEasyScoreCalculator implements EasyScoreCalculator<TechnicianSchedulingSolution> {
 
     @Override
     public HardSoftLongScore calculateScore(TechnicianSchedulingSolution solution) {
-        boolean timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
+        boolean timeWindowed = solution instanceof TechnicianSchedulingSolution;
         List<Task> taskList = solution.getTaskList();
         long hardScore = 0L;
         long softScore = 0L;
@@ -46,7 +44,7 @@ public class TechnicianSchedulingEasyScoreCalculator implements EasyScoreCalcula
                     softScore -= task.getLocation().getDistanceTo(technician.getLocation());
                 }
                 if (timeWindowed) {
-                    TimeWindowedTask timeWindowedCustomer = (TimeWindowedTask) task;
+                    Task timeWindowedCustomer = task;
                     long dueTime = timeWindowedCustomer.getDueTime();
                     Long arrivalTime = timeWindowedCustomer.getArrivalTime();
                     if (dueTime < arrivalTime) {

@@ -32,8 +32,6 @@ import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
 public class TechnicianSchedulingPanel extends SolutionPanel {
 
@@ -133,8 +131,8 @@ public class TechnicianSchedulingPanel extends SolutionPanel {
 
     protected Task createCustomer(TechnicianSchedulingSolution solution, Location newLocation) {
         Task newCustomer;
-        if (solution instanceof TimeWindowedTechnicianSchedulingSolution) {
-            TimeWindowedTask newTimeWindowedCustomer = new TimeWindowedTask();
+        if (solution instanceof TechnicianSchedulingSolution) {
+            Task newTimeWindowedCustomer = new Task();
             Depot timeWindowedDepot = solution.getDepotList().get(0);
             long windowTime = (timeWindowedDepot.getDueTime() - timeWindowedDepot.getReadyTime()) / 4L;
             long readyTime = RandomUtils.nextLong(demandRandom, windowTime * 3L);

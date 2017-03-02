@@ -36,8 +36,6 @@ import org.optaplanner.examples.technicianscheduling.domain.TechnicianScheduling
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 import org.optaplanner.swing.impl.TangoColorFactory;
 
 public class TechnicianSchedulingSolutionPainter {
@@ -93,8 +91,8 @@ public class TechnicianSchedulingSolutionPainter {
             int y = translator.translateLatitudeToY(location.getLatitude());
             g.setColor(TangoColorFactory.ALUMINIUM_4);
             g.fillRect(x - 1, y - 1, 3, 3);
-            if (customer instanceof TimeWindowedTask) {
-                TimeWindowedTask timeWindowedCustomer = (TimeWindowedTask) customer;
+            if (customer instanceof Task) {
+                Task timeWindowedCustomer = customer;
                 g.setColor(TangoColorFactory.ALUMINIUM_3);
                 int circleX = x - (TIME_WINDOW_DIAMETER / 2);
                 int circleY = y + 5;
@@ -178,7 +176,7 @@ public class TechnicianSchedulingSolutionPainter {
         g.drawString(vehiclesSizeString, ((int) width - g.getFontMetrics().stringWidth(vehiclesSizeString)) / 2, (int) height - 10 - TEXT_SIZE);
         g.setColor(TangoColorFactory.ALUMINIUM_4);
         g.fillRect(6, (int) height - 6 - (TEXT_SIZE / 2), 3, 3);
-        g.drawString((solution instanceof TimeWindowedTechnicianSchedulingSolution) ? "Customer: demand, time window and arrival time" : "Customer: demand", 15, (int) height - 5);
+        g.drawString((solution instanceof TechnicianSchedulingSolution) ? "Customer: demand, time window and arrival time" : "Customer: demand", 15, (int) height - 5);
         String customersSizeString = solution.getTaskList().size() + " customers";
         g.drawString(customersSizeString, ((int) width - g.getFontMetrics().stringWidth(customersSizeString)) / 2, (int) height - 5);
         if (solution.getDistanceType() == DistanceType.AIR_DISTANCE) {
@@ -215,8 +213,8 @@ public class TechnicianSchedulingSolutionPainter {
             }
         }
         for (Task customer : solution.getTaskList()) {
-            if (customer instanceof TimeWindowedTask) {
-                TimeWindowedTask timeWindowedCustomer = (TimeWindowedTask) customer;
+            if (customer instanceof Task) {
+                Task timeWindowedCustomer = (Task) customer;
                 long readyTime = timeWindowedCustomer.getReadyTime();
                 if (readyTime < minimumTimeWindowTime) {
                     minimumTimeWindowTime = readyTime;

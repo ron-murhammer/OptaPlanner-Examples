@@ -26,8 +26,6 @@ import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
 import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
 public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncrementalScoreCalculator<TechnicianSchedulingSolution> {
 
@@ -39,7 +37,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
 
     @Override
     public void resetWorkingSolution(TechnicianSchedulingSolution solution) {
-        timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
+        timeWindowed = solution instanceof TechnicianSchedulingSolution;
         List<Technician> vehicleList = solution.getTechnicianList();
         vehicleDemandMap = new HashMap<Technician, Integer>(vehicleList.size());
         for (Technician vehicle : vehicleList) {
@@ -52,7 +50,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
             insertVehicle(customer);
             // Do not do insertNextCustomer(customer) to avoid counting distanceFromLastCustomerToDepot twice
             if (timeWindowed) {
-                insertArrivalTime((TimeWindowedTask) customer);
+                insertArrivalTime(customer);
             }
         }
     }
@@ -71,7 +69,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         insertVehicle((Task) entity);
         // Do not do insertNextCustomer(customer) to avoid counting distanceFromLastCustomerToDepot twice
         if (timeWindowed) {
-            insertArrivalTime((TimeWindowedTask) entity);
+            insertArrivalTime((Task) entity);
         }
     }
 
@@ -87,7 +85,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         } else if (variableName.equals("nextCustomer")) {
             retractNextCustomer((Task) entity);
         } else if (variableName.equals("arrivalTime")) {
-            retractArrivalTime((TimeWindowedTask) entity);
+            retractArrivalTime((Task) entity);
         } else {
             throw new IllegalArgumentException("Unsupported variableName (" + variableName + ").");
         }
@@ -105,7 +103,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         } else if (variableName.equals("nextCustomer")) {
             insertNextCustomer((Task) entity);
         } else if (variableName.equals("arrivalTime")) {
-            insertArrivalTime((TimeWindowedTask) entity);
+            insertArrivalTime((Task) entity);
         } else {
             throw new IllegalArgumentException("Unsupported variableName (" + variableName + ").");
         }
@@ -120,7 +118,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         retractVehicle((Task) entity);
         // Do not do retractNextCustomer(customer) to avoid counting distanceFromLastCustomerToDepot twice
         if (timeWindowed) {
-            retractArrivalTime((TimeWindowedTask) entity);
+            retractArrivalTime((Task) entity);
         }
     }
 
@@ -187,7 +185,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         }
     }
 
-    private void insertArrivalTime(TimeWindowedTask customer) {
+    private void insertArrivalTime(Task customer) {
         Long arrivalTime = customer.getArrivalTime();
         if (arrivalTime != null) {
             long dueTime = customer.getDueTime();
@@ -199,7 +197,7 @@ public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncr
         // Score constraint arrivalAfterDueTimeAtDepot is a build-in hard constraint in VehicleRoutingImporter
     }
 
-    private void retractArrivalTime(TimeWindowedTask customer) {
+    private void retractArrivalTime(Task customer) {
         Long arrivalTime = customer.getArrivalTime();
         if (arrivalTime != null) {
             long dueTime = customer.getDueTime();

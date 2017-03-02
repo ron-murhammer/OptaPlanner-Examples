@@ -21,7 +21,6 @@ import org.optaplanner.core.impl.domain.variable.listener.VariableListener;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
 
 // TODO When this class is added only for TimeWindowedCustomer, use TimeWindowedCustomer instead of Customer
 public class ArrivalTimeUpdatingVariableListener implements VariableListener<Task> {
@@ -33,9 +32,7 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Tas
 
     @Override
     public void afterEntityAdded(ScoreDirector scoreDirector, Task customer) {
-        if (customer instanceof TimeWindowedTask) {
-            updateArrivalTime(scoreDirector, (TimeWindowedTask) customer);
-        }
+            updateArrivalTime(scoreDirector, customer);
     }
 
     @Override
@@ -45,9 +42,7 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Tas
 
     @Override
     public void afterVariableChanged(ScoreDirector scoreDirector, Task customer) {
-        if (customer instanceof TimeWindowedTask) {
-            updateArrivalTime(scoreDirector, (TimeWindowedTask) customer);
-        }
+            updateArrivalTime(scoreDirector, customer);
     }
 
     @Override
@@ -60,10 +55,10 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Tas
         // Do nothing
     }
 
-    protected void updateArrivalTime(ScoreDirector scoreDirector, TimeWindowedTask sourceCustomer) {
+    protected void updateArrivalTime(ScoreDirector scoreDirector, Task sourceCustomer) {
         Standstill previousStandstill = sourceCustomer.getPreviousStandstill();
-        Long departureTime = (previousStandstill instanceof TimeWindowedTask) ? ((TimeWindowedTask) previousStandstill).getDepartureTime() : null;
-        TimeWindowedTask shadowCustomer = sourceCustomer;
+        Long departureTime = (previousStandstill instanceof Task) ? ((Task) previousStandstill).getDepartureTime() : null;
+        Task shadowCustomer = sourceCustomer;
         Long arrivalTime = calculateArrivalTime(shadowCustomer, departureTime);
         while (shadowCustomer != null && ObjectUtils.notEqual(shadowCustomer.getArrivalTime(), arrivalTime)) {
             scoreDirector.beforeVariableChanged(shadowCustomer, "arrivalTime");
@@ -75,7 +70,7 @@ public class ArrivalTimeUpdatingVariableListener implements VariableListener<Tas
         }
     }
 
-    private Long calculateArrivalTime(TimeWindowedTask customer, Long previousDepartureTime) {
+    private Long calculateArrivalTime(Task customer, Long previousDepartureTime) {
         if (customer == null || customer.getPreviousStandstill() == null) {
             return null;
         }

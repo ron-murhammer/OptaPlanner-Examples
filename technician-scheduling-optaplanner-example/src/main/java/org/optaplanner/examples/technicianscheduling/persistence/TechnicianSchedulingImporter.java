@@ -36,8 +36,6 @@ import org.optaplanner.examples.technicianscheduling.domain.location.Location;
 import org.optaplanner.examples.technicianscheduling.domain.location.RoadLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.segmented.HubSegmentLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.segmented.RoadSegmentLocation;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
 public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
 
@@ -103,7 +101,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 readCourseraFormat();
             } else {
                 timewindowed = true;
-                solution = new TimeWindowedTechnicianSchedulingSolution();
+                solution = new TechnicianSchedulingSolution();
                 solution.setId(0L);
                 solution.setName(firstLine);
                 readTimeWindowedFormat();
@@ -135,7 +133,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                 timewindowed = true;
                 Long solutionId = solution.getId();
                 String solutionName = solution.getName();
-                solution = new TimeWindowedTechnicianSchedulingSolution();
+                solution = new TechnicianSchedulingSolution();
                 solution.setId(solutionId);
                 solution.setName(solutionName);
             } else {
@@ -312,7 +310,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                     }
                     depotList.add(depot);
                 } else {
-                    Task customer = timewindowed ? new TimeWindowedTask() : new Task();
+                    Task customer = new Task();
                     customer.setId(id);
                     Location location = locationMap.get(id);
                     if (location == null) {
@@ -320,7 +318,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                     }
                     customer.setLocation(location);
                     if (timewindowed) {
-                        TimeWindowedTask timeWindowedCustomer = (TimeWindowedTask) customer;
+                        Task timeWindowedCustomer = customer;
                         timeWindowedCustomer.setReadyTime(Long.parseLong(lineTokens[2]));
                         timeWindowedCustomer.setDueTime(Long.parseLong(lineTokens[3]));
                         timeWindowedCustomer.setServiceDuration(Long.parseLong(lineTokens[4]));
@@ -483,7 +481,7 @@ public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
                     depotList.add(depot);
                     first = false;
                 } else {
-                    TimeWindowedTask customer = new TimeWindowedTask();
+                    Task customer = new Task();
                     customer.setId(id);
                     customer.setLocation(location);
                     customer.setReadyTime(readyTime);

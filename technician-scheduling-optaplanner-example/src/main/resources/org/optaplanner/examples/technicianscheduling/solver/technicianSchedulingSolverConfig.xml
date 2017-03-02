@@ -3,7 +3,6 @@
   <solutionClass>org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution</solutionClass>
   <entityClass>org.optaplanner.examples.technicianscheduling.domain.Standstill</entityClass>
   <entityClass>org.optaplanner.examples.technicianscheduling.domain.Task</entityClass>
-  <entityClass>org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask</entityClass>
 
   <scoreDirectorFactory>
     <scoreDefinitionType>HARD_SOFT_LONG</scoreDefinitionType>
