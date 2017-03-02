@@ -8,14 +8,10 @@
     <version>6.5.0.Final-redhat-2</version>
   </parent>
 
-  <artifactId>optaplanner-examples</artifactId>
+  <artifactId>technician-scheduling-optaplanner-example</artifactId>
 
-  <name>OptaPlanner examples</name>
-  <description>OptaPlanner solves planning problems.
-    This lightweight, embeddable planning engine implements powerful and scalable algorithms
-    to optimize business resource scheduling and planning.
-
-    This module contains the non-web examples which demonstrate how to use it in a normal Java application.</description>
+  <name>Technician Scheduling OptaPlanner Example</name>
+  <description>Technician Scheduling OptaPlanner Example</description>
 
   <repositories>
     <!-- TODO remove this once maven central replicates the jboss repository -->
