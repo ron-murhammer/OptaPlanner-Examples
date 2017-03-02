@@ -21,11 +21,11 @@ import java.io.File;
 import org.optaplanner.core.api.domain.solution.Solution;
 import org.optaplanner.persistence.common.api.domain.solution.SolutionFileIO;
 
-public class VehicleRoutingFileIO implements SolutionFileIO {
+public class TechnicianSchedulingFileIO implements SolutionFileIO {
 
     public static final String FILE_EXTENSION = "vrp";
 
-    private VehicleRoutingImporter importer = new VehicleRoutingImporter();
+    private TechnicianSchedulingImporter importer = new TechnicianSchedulingImporter();
 
     public String getInputFileExtension() {
         return FILE_EXTENSION;

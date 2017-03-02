@@ -18,13 +18,13 @@ package org.optaplanner.examples.technicianscheduling.app;
 
 import org.optaplanner.examples.common.app.CommonBenchmarkApp;
 
-public class VehicleRoutingBenchmarkApp extends CommonBenchmarkApp {
+public class TechnicianSchedulingBenchmarkApp extends CommonBenchmarkApp {
 
     public static void main(String[] args) {
-        new VehicleRoutingBenchmarkApp().buildAndBenchmark(args);
+        new TechnicianSchedulingBenchmarkApp().buildAndBenchmark(args);
     }
 
-    public VehicleRoutingBenchmarkApp() {
+    public TechnicianSchedulingBenchmarkApp() {
         super(
                 new ArgOption("default",
                         "org/optaplanner/examples/vehiclerouting/benchmark/vehicleRoutingBenchmarkConfig.xml"),

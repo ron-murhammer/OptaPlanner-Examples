@@ -26,29 +26,29 @@ import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.core.impl.score.director.ScoreDirector;
 import org.optaplanner.core.impl.score.director.ScoreDirectorFactory;
 import org.optaplanner.examples.common.app.LoggingMain;
-import org.optaplanner.examples.technicianscheduling.app.VehicleRoutingApp;
+import org.optaplanner.examples.technicianscheduling.app.TechnicianSchedulingApp;
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingDao;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingDao;
 
-public class VehicleRoutingDistanceTypeComparison extends LoggingMain {
+public class TechnicianSchedulingDistanceTypeComparison extends LoggingMain {
 
     private final ScoreDirectorFactory scoreDirectorFactory;
 
     public static void main(String[] args) {
-        new VehicleRoutingDistanceTypeComparison().compare(
+        new TechnicianSchedulingDistanceTypeComparison().compare(
                 "solved/tmp-p-belgium-n50-k10.xml",
                 "solved/tmp-p-belgium-road-km-n50-k10.xml",
                 "solved/tmp-p-belgium-road-time-n50-k10.xml");
     }
 
-    protected final VehicleRoutingDao vehicleRoutingDao;
+    protected final TechnicianSchedulingDao vehicleRoutingDao;
 
-    public VehicleRoutingDistanceTypeComparison() {
-        vehicleRoutingDao = new VehicleRoutingDao();
-        SolverFactory solverFactory = SolverFactory.createFromXmlResource(VehicleRoutingApp.SOLVER_CONFIG);
+    public TechnicianSchedulingDistanceTypeComparison() {
+        vehicleRoutingDao = new TechnicianSchedulingDao();
+        SolverFactory solverFactory = SolverFactory.createFromXmlResource(TechnicianSchedulingApp.SOLVER_CONFIG);
         scoreDirectorFactory = solverFactory.buildSolver().getScoreDirectorFactory();
     }
 
@@ -64,13 +64,13 @@ public class VehicleRoutingDistanceTypeComparison extends LoggingMain {
         for (File varFile : files) {
             logger.info("  Results for {}:", varFile.getName());
             // Intentionally create a new instance instead of reusing the older one.
-            VehicleRoutingSolution variablesSolution = (VehicleRoutingSolution) vehicleRoutingDao.readSolution(varFile);
+            TechnicianSchedulingSolution variablesSolution = (TechnicianSchedulingSolution) vehicleRoutingDao.readSolution(varFile);
             for (File inputFile : files) {
                 HardSoftLongScore score;
                 if (inputFile == varFile) {
                     score = variablesSolution.getScore();
                 } else {
-                    VehicleRoutingSolution inputSolution = (VehicleRoutingSolution) vehicleRoutingDao.readSolution(inputFile);
+                    TechnicianSchedulingSolution inputSolution = (TechnicianSchedulingSolution) vehicleRoutingDao.readSolution(inputFile);
                     applyVariables(inputSolution, variablesSolution);
                     score = inputSolution.getScore();
                 }
@@ -79,7 +79,7 @@ public class VehicleRoutingDistanceTypeComparison extends LoggingMain {
         }
     }
 
-    private void applyVariables(VehicleRoutingSolution inputSolution, VehicleRoutingSolution varSolution) {
+    private void applyVariables(TechnicianSchedulingSolution inputSolution, TechnicianSchedulingSolution varSolution) {
         List<Technician> inputVehicleList = inputSolution.getTechnicianList();
         Map<Long, Technician> inputVehicleMap = new LinkedHashMap<Long, Technician>(inputVehicleList.size());
         for (Technician vehicle : inputVehicleList) {

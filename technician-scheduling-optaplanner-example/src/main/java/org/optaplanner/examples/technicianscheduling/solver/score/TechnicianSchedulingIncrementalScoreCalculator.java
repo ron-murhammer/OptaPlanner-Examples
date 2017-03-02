@@ -25,11 +25,11 @@ import org.optaplanner.core.impl.score.director.incremental.AbstractIncrementalS
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
-public class VehicleRoutingIncrementalScoreCalculator extends AbstractIncrementalScoreCalculator<VehicleRoutingSolution> {
+public class TechnicianSchedulingIncrementalScoreCalculator extends AbstractIncrementalScoreCalculator<TechnicianSchedulingSolution> {
 
     private boolean timeWindowed;
     private Map<Technician, Integer> vehicleDemandMap;
@@ -37,8 +37,8 @@ public class VehicleRoutingIncrementalScoreCalculator extends AbstractIncrementa
     private long hardScore;
     private long softScore;
 
-    public void resetWorkingSolution(VehicleRoutingSolution solution) {
-        timeWindowed = solution instanceof TimeWindowedVehicleRoutingSolution;
+    public void resetWorkingSolution(TechnicianSchedulingSolution solution) {
+        timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
         List<Technician> vehicleList = solution.getTechnicianList();
         vehicleDemandMap = new HashMap<Technician, Integer>(vehicleList.size());
         for (Technician vehicle : vehicleList) {

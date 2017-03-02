@@ -23,15 +23,15 @@ import org.junit.runners.Parameterized;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import org.optaplanner.examples.common.app.ImportDirSolveAllTurtleTest;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
-import org.optaplanner.examples.technicianscheduling.app.VehicleRoutingApp;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingImporter;
-import org.optaplanner.examples.technicianscheduling.solver.score.VehicleRoutingEasyScoreCalculator;
+import org.optaplanner.examples.technicianscheduling.app.TechnicianSchedulingApp;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
+import org.optaplanner.examples.technicianscheduling.solver.score.TechnicianSchedulingEasyScoreCalculator;
 
 public class VehicleRoutingSolveAllTurtleTest extends ImportDirSolveAllTurtleTest {
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Collection<Object[]> getSolutionFilesAsParameters() {
-        return getImportDirFilesAsParameters(new VehicleRoutingImporter());
+        return getImportDirFilesAsParameters(new TechnicianSchedulingImporter());
     }
 
     public VehicleRoutingSolveAllTurtleTest(File dataFile) {
@@ -40,17 +40,17 @@ public class VehicleRoutingSolveAllTurtleTest extends ImportDirSolveAllTurtleTes
 
     @Override
     protected String createSolverConfigResource() {
-        return VehicleRoutingApp.SOLVER_CONFIG;
+        return TechnicianSchedulingApp.SOLVER_CONFIG;
     }
 
     @Override
     protected AbstractSolutionImporter createSolutionImporter() {
-        return new VehicleRoutingImporter();
+        return new TechnicianSchedulingImporter();
     }
 
     @Override
     protected Class<? extends EasyScoreCalculator> overwritingEasyScoreCalculatorClass() {
-        return VehicleRoutingEasyScoreCalculator.class;
+        return TechnicianSchedulingEasyScoreCalculator.class;
     }
 
 }

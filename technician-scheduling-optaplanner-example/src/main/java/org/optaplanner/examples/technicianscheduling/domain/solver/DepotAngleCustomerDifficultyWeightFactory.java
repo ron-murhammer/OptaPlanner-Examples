@@ -20,15 +20,15 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.optaplanner.core.impl.heuristic.selector.common.decorator.SelectionSorterWeightFactory;
 import org.optaplanner.examples.technicianscheduling.domain.Depot;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
 /**
  * On large datasets, the constructed solution looks like pizza slices.
  */
 public class DepotAngleCustomerDifficultyWeightFactory
-        implements SelectionSorterWeightFactory<VehicleRoutingSolution, Task> {
+        implements SelectionSorterWeightFactory<TechnicianSchedulingSolution, Task> {
 
-    public Comparable createSorterWeight(VehicleRoutingSolution vehicleRoutingSolution, Task customer) {
+    public Comparable createSorterWeight(TechnicianSchedulingSolution vehicleRoutingSolution, Task customer) {
         Depot depot = vehicleRoutingSolution.getDepotList().get(0);
         return new DepotAngleCustomerDifficultyWeight(customer,
                 customer.getLocation().getAngle(depot.getLocation()),

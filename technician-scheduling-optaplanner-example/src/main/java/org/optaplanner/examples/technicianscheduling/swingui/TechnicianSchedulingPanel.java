@@ -28,26 +28,26 @@ import org.optaplanner.core.impl.solver.random.RandomUtils;
 import org.optaplanner.examples.common.swingui.SolutionPanel;
 import org.optaplanner.examples.common.swingui.SolverAndPersistenceFrame;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
-public class VehicleRoutingPanel extends SolutionPanel {
+public class TechnicianSchedulingPanel extends SolutionPanel {
 
     public static final String LOGO_PATH = "/org/optaplanner/examples/technicianscheduling/swingui/vehicleRoutingLogo.png";
 
-    private VehicleRoutingWorldPanel vehicleRoutingWorldPanel;
+    private TechnicianSchedulingWorldPanel vehicleRoutingWorldPanel;
 
     private Random demandRandom = new Random(37);
     private Long nextLocationId = null;
 
-    public VehicleRoutingPanel() {
+    public TechnicianSchedulingPanel() {
         setLayout(new BorderLayout());
         JTabbedPane tabbedPane = new JTabbedPane();
-        vehicleRoutingWorldPanel = new VehicleRoutingWorldPanel(this);
+        vehicleRoutingWorldPanel = new TechnicianSchedulingWorldPanel(this);
         vehicleRoutingWorldPanel.setPreferredSize(PREFERRED_SCROLLABLE_VIEWPORT_SIZE);
         tabbedPane.add("World", vehicleRoutingWorldPanel);
         add(tabbedPane, BorderLayout.CENTER);
@@ -63,12 +63,12 @@ public class VehicleRoutingPanel extends SolutionPanel {
         return true;
     }
 
-    public VehicleRoutingSolution getVehicleRoutingSolution() {
-        return (VehicleRoutingSolution) solutionBusiness.getSolution();
+    public TechnicianSchedulingSolution getVehicleRoutingSolution() {
+        return (TechnicianSchedulingSolution) solutionBusiness.getSolution();
     }
 
     public void resetPanel(Solution solutionObject) {
-        VehicleRoutingSolution solution = (VehicleRoutingSolution) solutionObject;
+        TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) solutionObject;
         vehicleRoutingWorldPanel.resetPanel(solution);
         resetNextLocationId();
     }
@@ -85,7 +85,7 @@ public class VehicleRoutingPanel extends SolutionPanel {
 
     @Override
     public void updatePanel(Solution solutionObject) {
-        VehicleRoutingSolution solution = (VehicleRoutingSolution) solutionObject;
+        TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) solutionObject;
         vehicleRoutingWorldPanel.updatePanel(solution);
     }
 
@@ -116,7 +116,7 @@ public class VehicleRoutingPanel extends SolutionPanel {
         logger.info("Scheduling insertion of newLocation ({}).", newLocation);
         doProblemFactChange(new ProblemFactChange() {
             public void doChange(ScoreDirector scoreDirector) {
-                VehicleRoutingSolution solution = (VehicleRoutingSolution) scoreDirector.getWorkingSolution();
+                TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) scoreDirector.getWorkingSolution();
                 scoreDirector.beforeProblemFactAdded(newLocation);
                 solution.getLocationList().add(newLocation);
                 scoreDirector.afterProblemFactAdded(newLocation);
@@ -129,9 +129,9 @@ public class VehicleRoutingPanel extends SolutionPanel {
         });
     }
 
-    protected Task createCustomer(VehicleRoutingSolution solution, Location newLocation) {
+    protected Task createCustomer(TechnicianSchedulingSolution solution, Location newLocation) {
         Task newCustomer;
-        if (solution instanceof TimeWindowedVehicleRoutingSolution) {
+        if (solution instanceof TimeWindowedTechnicianSchedulingSolution) {
             TimeWindowedTask newTimeWindowedCustomer = new TimeWindowedTask();
             TimeWindowedDepot timeWindowedDepot = (TimeWindowedDepot) solution.getDepotList().get(0);
             long windowTime = (timeWindowedDepot.getDueTime() - timeWindowedDepot.getReadyTime()) / 4L;

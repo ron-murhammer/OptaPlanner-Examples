@@ -22,22 +22,22 @@ import org.optaplanner.examples.common.app.CommonApp;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
 import org.optaplanner.examples.common.persistence.SolutionDao;
 import org.optaplanner.examples.common.swingui.SolutionPanel;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingDao;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingImporter;
-import org.optaplanner.examples.technicianscheduling.swingui.VehicleRoutingPanel;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingDao;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
+import org.optaplanner.examples.technicianscheduling.swingui.TechnicianSchedulingPanel;
 
-public class VehicleRoutingApp extends CommonApp<VehicleRoutingSolution> {
+public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolution> {
 
     public static final String SOLVER_CONFIG
             = "org/optaplanner/examples/technicianscheduling/solver/vehicleRoutingSolverConfig.xml";
 
     public static void main(String[] args) {
         prepareSwingEnvironment();
-        new VehicleRoutingApp().init();
+        new TechnicianSchedulingApp().init();
     }
 
-    public VehicleRoutingApp() {
+    public TechnicianSchedulingApp() {
         super("Vehicle routing",
                 "Official competition name: Capacitated vehicle routing problem (CVRP), " +
                         "optionally with time windows (CVRPTW)\n\n" +
@@ -46,23 +46,23 @@ public class VehicleRoutingApp extends CommonApp<VehicleRoutingSolution> {
                         "Do not overload the capacity of the vehicles.\n" +
                         "Arrive within the time window of each customer.",
                 SOLVER_CONFIG,
-                VehicleRoutingPanel.LOGO_PATH);
+                TechnicianSchedulingPanel.LOGO_PATH);
     }
 
     @Override
     protected SolutionPanel createSolutionPanel() {
-        return new VehicleRoutingPanel();
+        return new TechnicianSchedulingPanel();
     }
 
     @Override
     protected SolutionDao createSolutionDao() {
-        return new VehicleRoutingDao();
+        return new TechnicianSchedulingDao();
     }
 
     @Override
     protected AbstractSolutionImporter[] createSolutionImporters() {
         return new AbstractSolutionImporter[]{
-                new VehicleRoutingImporter()
+                new TechnicianSchedulingImporter()
         };
     }
 

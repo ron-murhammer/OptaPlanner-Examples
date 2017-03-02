@@ -30,17 +30,17 @@ import org.optaplanner.core.impl.score.director.ScoreDirector;
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // TODO PLANNER-380 Delete this class. Temporary implementation until BUOY_FIT is implemented as a Construction Heuristic
-public class BuoyVehicleRoutingSolutionInitializer extends AbstractCustomPhaseCommand {
+public class BuoyTechnicianSchedulingSolutionInitializer extends AbstractCustomPhaseCommand {
 
     protected final transient Logger logger = LoggerFactory.getLogger(getClass());
 
     public void changeWorkingSolution(ScoreDirector scoreDirector) {
-        VehicleRoutingSolution solution = (VehicleRoutingSolution) scoreDirector.getWorkingSolution();
+        TechnicianSchedulingSolution solution = (TechnicianSchedulingSolution) scoreDirector.getWorkingSolution();
         List<Technician> vehicleList = solution.getTechnicianList();
         List<Task> customerList = solution.getTaskList();
         List<Standstill> standstillList = new ArrayList<Standstill>(vehicleList.size() + customerList.size());

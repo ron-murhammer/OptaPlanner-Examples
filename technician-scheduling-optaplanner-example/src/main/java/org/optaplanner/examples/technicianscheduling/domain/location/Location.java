@@ -20,7 +20,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamInclude;
 import org.apache.commons.lang3.ObjectUtils;
 import org.optaplanner.examples.common.domain.AbstractPersistable;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
 @XStreamAlias("VrpLocation")
 @XStreamInclude({
@@ -71,7 +71,7 @@ public abstract class Location extends AbstractPersistable {
     // ************************************************************************
 
     /**
-     * The distance's unit of measurement depends on the {@link VehicleRoutingSolution}'s {@link DistanceType}.
+     * The distance's unit of measurement depends on the {@link TechnicianSchedulingSolution}'s {@link DistanceType}.
      * It can be in miles or km, but for most cases it's in the TSPLIB's unit of measurement.
      * @param location never null
      * @return a positive number, the distance multiplied by 1000 to avoid floating point arithmetic rounding errors

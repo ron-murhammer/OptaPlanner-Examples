@@ -25,14 +25,14 @@ import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import org.optaplanner.examples.technicianscheduling.domain.Standstill;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
-public class VehicleRoutingEasyScoreCalculator implements EasyScoreCalculator<VehicleRoutingSolution> {
+public class TechnicianSchedulingEasyScoreCalculator implements EasyScoreCalculator<TechnicianSchedulingSolution> {
 
-    public HardSoftLongScore calculateScore(VehicleRoutingSolution solution) {
-        boolean timeWindowed = solution instanceof TimeWindowedVehicleRoutingSolution;
+    public HardSoftLongScore calculateScore(TechnicianSchedulingSolution solution) {
+        boolean timeWindowed = solution instanceof TimeWindowedTechnicianSchedulingSolution;
         List<Task> taskList = solution.getTaskList();
         long hardScore = 0L;
         long softScore = 0L;

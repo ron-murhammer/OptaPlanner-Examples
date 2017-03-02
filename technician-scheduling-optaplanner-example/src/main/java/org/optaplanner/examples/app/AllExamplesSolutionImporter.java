@@ -17,7 +17,7 @@
 package org.optaplanner.examples.app;
 
 import org.optaplanner.examples.common.app.LoggingMain;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingImporter;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 
 public class AllExamplesSolutionImporter extends LoggingMain {
 
@@ -26,7 +26,7 @@ public class AllExamplesSolutionImporter extends LoggingMain {
     }
 
     public void importAll() {
-        VehicleRoutingImporter.main(new String[0]);
+        TechnicianSchedulingImporter.main(new String[0]);
     }
 
 }

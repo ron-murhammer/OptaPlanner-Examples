@@ -16,11 +16,11 @@
 
 package org.optaplanner.examples.technicianscheduling.domain.timewindowed;
 
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("VrpTimeWindowedVehicleRoutingSolution")
-public class TimeWindowedVehicleRoutingSolution extends VehicleRoutingSolution {
+public class TimeWindowedTechnicianSchedulingSolution extends TechnicianSchedulingSolution {
 
 }

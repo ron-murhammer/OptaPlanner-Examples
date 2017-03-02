@@ -32,15 +32,15 @@ import org.optaplanner.examples.common.swingui.latitudelongitude.LatitudeLongitu
 import org.optaplanner.examples.technicianscheduling.domain.Depot;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
-public class VehicleRoutingSolutionPainter {
+public class TechnicianSchedulingSolutionPainter {
 
     private static final int TEXT_SIZE = 12;
     private static final int TIME_WINDOW_DIAMETER = 26;
@@ -56,7 +56,7 @@ public class VehicleRoutingSolutionPainter {
     private Long minimumTimeWindowTime = null;
     private Long maximumTimeWindowTime = null;
 
-    public VehicleRoutingSolutionPainter() {
+    public TechnicianSchedulingSolutionPainter() {
         depotImageIcon = new ImageIcon(getClass().getResource(IMAGE_PATH_PREFIX + "depot.png"));
         vehicleImageIcons = new ImageIcon[] {
                 new ImageIcon(getClass().getResource(IMAGE_PATH_PREFIX + "vehicleChameleon.png")),
@@ -80,7 +80,7 @@ public class VehicleRoutingSolutionPainter {
         return translator;
     }
 
-    public void reset(VehicleRoutingSolution solution, Dimension size, ImageObserver imageObserver) {
+    public void reset(TechnicianSchedulingSolution solution, Dimension size, ImageObserver imageObserver) {
         translator = new LatitudeLongitudeTranslator();
         for (Location location : solution.getLocationList()) {
             translator.addCoordinates(location.getLatitude(), location.getLongitude());
@@ -198,7 +198,7 @@ public class VehicleRoutingSolutionPainter {
                 ((int) width - g.getFontMetrics().stringWidth(vehiclesSizeString)) / 2, (int) height - 10 - TEXT_SIZE);
         g.setColor(TangoColorFactory.ALUMINIUM_4);
         g.fillRect(6, (int) height - 6 - (TEXT_SIZE / 2), 3, 3);
-        g.drawString((solution instanceof TimeWindowedVehicleRoutingSolution)
+        g.drawString((solution instanceof TimeWindowedTechnicianSchedulingSolution)
                 ? "Customer: demand, time window and arrival time" : "Customer: demand", 15, (int) height - 5);
         String customersSizeString = solution.getTaskList().size() + " customers";
         g.drawString(customersSizeString,
@@ -223,7 +223,7 @@ public class VehicleRoutingSolutionPainter {
         }
     }
 
-    private void determineMinimumAndMaximumTimeWindowTime(VehicleRoutingSolution solution) {
+    private void determineMinimumAndMaximumTimeWindowTime(TechnicianSchedulingSolution solution) {
         minimumTimeWindowTime = Long.MAX_VALUE;
         maximumTimeWindowTime = Long.MIN_VALUE;
         for (Depot depot : solution.getDepotList()) {

@@ -33,15 +33,15 @@ import org.optaplanner.core.impl.score.buildin.hardsoftlong.HardSoftLongScoreDef
 import org.optaplanner.examples.common.domain.AbstractPersistable;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 import org.optaplanner.persistence.xstream.impl.score.XStreamScoreConverter;
 
 @PlanningSolution
 @XStreamAlias("VrpVehicleRoutingSolution")
 @XStreamInclude({
-        TimeWindowedVehicleRoutingSolution.class
+        TimeWindowedTechnicianSchedulingSolution.class
 })
-public class VehicleRoutingSolution extends AbstractPersistable implements Solution<HardSoftLongScore> {
+public class TechnicianSchedulingSolution extends AbstractPersistable implements Solution<HardSoftLongScore> {
 
     protected String name;
     protected DistanceType distanceType;

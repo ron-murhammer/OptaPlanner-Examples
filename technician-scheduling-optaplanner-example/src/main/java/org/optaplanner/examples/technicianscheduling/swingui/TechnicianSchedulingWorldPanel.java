@@ -25,22 +25,22 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import org.optaplanner.examples.common.swingui.latitudelongitude.LatitudeLongitudeTranslator;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
-public class VehicleRoutingWorldPanel extends JPanel {
+public class TechnicianSchedulingWorldPanel extends JPanel {
 
-    private final VehicleRoutingPanel vehicleRoutingPanel;
+    private final TechnicianSchedulingPanel vehicleRoutingPanel;
 
-    private VehicleRoutingSolutionPainter solutionPainter = new VehicleRoutingSolutionPainter();
+    private TechnicianSchedulingSolutionPainter solutionPainter = new TechnicianSchedulingSolutionPainter();
 
-    public VehicleRoutingWorldPanel(VehicleRoutingPanel vehicleRoutingPanel) {
+    public TechnicianSchedulingWorldPanel(TechnicianSchedulingPanel vehicleRoutingPanel) {
         this.vehicleRoutingPanel = vehicleRoutingPanel;
-        solutionPainter = new VehicleRoutingSolutionPainter();
+        solutionPainter = new TechnicianSchedulingSolutionPainter();
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 // TODO Not thread-safe during solving
-                VehicleRoutingSolution solution = VehicleRoutingWorldPanel.this.vehicleRoutingPanel.getVehicleRoutingSolution();
+                TechnicianSchedulingSolution solution = TechnicianSchedulingWorldPanel.this.vehicleRoutingPanel.getVehicleRoutingSolution();
                 if (solution != null) {
                     resetPanel(solution);
                 }
@@ -54,19 +54,19 @@ public class VehicleRoutingWorldPanel extends JPanel {
                     if (translator != null) {
                         double longitude = translator.translateXToLongitude(e.getX());
                         double latitude = translator.translateYToLatitude(e.getY());
-                        VehicleRoutingWorldPanel.this.vehicleRoutingPanel.insertLocationAndCustomer(longitude, latitude);
+                        TechnicianSchedulingWorldPanel.this.vehicleRoutingPanel.insertLocationAndCustomer(longitude, latitude);
                     }
                 }
             }
         });
     }
 
-    public void resetPanel(VehicleRoutingSolution solution) {
+    public void resetPanel(TechnicianSchedulingSolution solution) {
         solutionPainter.reset(solution, getSize(), this);
         repaint();
     }
 
-    public void updatePanel(VehicleRoutingSolution solution) {
+    public void updatePanel(TechnicianSchedulingSolution solution) {
         resetPanel(solution);
     }
 

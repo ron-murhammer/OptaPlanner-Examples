@@ -17,12 +17,12 @@
 package org.optaplanner.examples.technicianscheduling.persistence;
 
 import org.optaplanner.examples.common.persistence.XStreamSolutionDao;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 
-public class VehicleRoutingDao extends XStreamSolutionDao {
+public class TechnicianSchedulingDao extends XStreamSolutionDao {
 
-    public VehicleRoutingDao() {
-        super("vehiclerouting", VehicleRoutingSolution.class);
+    public TechnicianSchedulingDao() {
+        super("vehiclerouting", TechnicianSchedulingSolution.class);
     }
 
 }

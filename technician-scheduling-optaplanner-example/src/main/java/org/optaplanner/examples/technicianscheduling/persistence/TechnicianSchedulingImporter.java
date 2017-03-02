@@ -29,7 +29,7 @@ import org.optaplanner.examples.common.persistence.AbstractTxtSolutionImporter;
 import org.optaplanner.examples.technicianscheduling.domain.Depot;
 import org.optaplanner.examples.technicianscheduling.domain.Task;
 import org.optaplanner.examples.technicianscheduling.domain.Technician;
-import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.TechnicianSchedulingSolution;
 import org.optaplanner.examples.technicianscheduling.domain.location.AirLocation;
 import org.optaplanner.examples.technicianscheduling.domain.location.DistanceType;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
@@ -38,12 +38,12 @@ import org.optaplanner.examples.technicianscheduling.domain.location.segmented.H
 import org.optaplanner.examples.technicianscheduling.domain.location.segmented.RoadSegmentLocation;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedDepot;
 import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTask;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedVehicleRoutingSolution;
+import org.optaplanner.examples.technicianscheduling.domain.timewindowed.TimeWindowedTechnicianSchedulingSolution;
 
-public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
+public class TechnicianSchedulingImporter extends AbstractTxtSolutionImporter {
 
     public static void main(String[] args) {
-        VehicleRoutingImporter importer = new VehicleRoutingImporter();
+        TechnicianSchedulingImporter importer = new TechnicianSchedulingImporter();
         importer.convert("vrpweb/basic/air/A-n33-k6.vrp", "cvrp-32customers.xml");
         importer.convert("vrpweb/basic/air/A-n55-k9.vrp", "cvrp-54customers.xml");
         importer.convert("vrpweb/basic/air/F-n72-k4.vrp", "cvrp-72customers.xml");
@@ -54,17 +54,17 @@ public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
         importer.convert("vrpweb/basic/road-unknown/bays-n29-k5.vrp", "road-cvrp-29customers.xml");
     }
 
-    public VehicleRoutingImporter() {
-        super(new VehicleRoutingDao());
+    public TechnicianSchedulingImporter() {
+        super(new TechnicianSchedulingDao());
     }
 
-    public VehicleRoutingImporter(boolean withoutDao) {
+    public TechnicianSchedulingImporter(boolean withoutDao) {
         super(withoutDao);
     }
 
     @Override
     public String getInputFileSuffix() {
-        return VehicleRoutingFileIO.FILE_EXTENSION;
+        return TechnicianSchedulingFileIO.FILE_EXTENSION;
     }
 
     public TxtInputBuilder createTxtInputBuilder() {
@@ -73,7 +73,7 @@ public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
 
     public static class VehicleRoutingInputBuilder extends TxtInputBuilder {
 
-        private VehicleRoutingSolution solution;
+        private TechnicianSchedulingSolution solution;
 
         private boolean timewindowed;
         private int customerListSize;
@@ -86,13 +86,13 @@ public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
             String firstLine = readStringValue();
             if (firstLine.matches("\\s*NAME\\s*:.*")) {
                 // Might be replaced by TimeWindowedVehicleRoutingSolution later on
-                solution = new VehicleRoutingSolution();
+                solution = new TechnicianSchedulingSolution();
                 solution.setId(0L);
                 solution.setName(removePrefixSuffixFromLine(firstLine, "\\s*NAME\\s*:", ""));
                 readVrpWebFormat();
             } else if (splitBySpacesOrTabs(firstLine).length == 3) {
                 timewindowed = false;
-                solution = new VehicleRoutingSolution();
+                solution = new TechnicianSchedulingSolution();
                 solution.setId(0L);
                 solution.setName(FilenameUtils.getBaseName(inputFile.getName()));
                 String[] tokens = splitBySpacesOrTabs(firstLine, 3);
@@ -102,7 +102,7 @@ public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
                 readCourseraFormat();
             } else {
                 timewindowed = true;
-                solution = new TimeWindowedVehicleRoutingSolution();
+                solution = new TimeWindowedTechnicianSchedulingSolution();
                 solution.setId(0L);
                 solution.setName(firstLine);
                 readTimeWindowedFormat();
@@ -140,7 +140,7 @@ public class VehicleRoutingImporter extends AbstractTxtSolutionImporter {
                 timewindowed = true;
                 Long solutionId = solution.getId();
                 String solutionName = solution.getName();
-                solution = new TimeWindowedVehicleRoutingSolution();
+                solution = new TimeWindowedTechnicianSchedulingSolution();
                 solution.setId(solutionId);
                 solution.setName(solutionName);
             } else {

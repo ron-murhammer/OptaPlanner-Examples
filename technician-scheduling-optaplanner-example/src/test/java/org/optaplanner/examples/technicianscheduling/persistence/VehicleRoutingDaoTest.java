@@ -22,18 +22,18 @@ import java.util.Collection;
 import org.junit.runners.Parameterized;
 import org.optaplanner.examples.common.persistence.SolutionDao;
 import org.optaplanner.examples.common.persistence.SolutionDaoTest;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingDao;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingDao;
 
 public class VehicleRoutingDaoTest extends SolutionDaoTest {
 
     @Override
     protected SolutionDao createSolutionDao() {
-        return new VehicleRoutingDao();
+        return new TechnicianSchedulingDao();
     }
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Collection<Object[]> getSolutionFilesAsParameters() {
-        return getSolutionFilesAsParameters(new VehicleRoutingDao());
+        return getSolutionFilesAsParameters(new TechnicianSchedulingDao());
     }
 
     public VehicleRoutingDaoTest(File solutionFile) {

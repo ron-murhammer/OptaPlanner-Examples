@@ -46,7 +46,7 @@ import org.optaplanner.examples.common.app.CommonApp;
 import org.optaplanner.examples.common.persistence.AbstractSolutionDao;
 import org.optaplanner.examples.common.swingui.OpenBrowserAction;
 import org.optaplanner.examples.common.swingui.SolverAndPersistenceFrame;
-import org.optaplanner.examples.technicianscheduling.app.VehicleRoutingApp;
+import org.optaplanner.examples.technicianscheduling.app.TechnicianSchedulingApp;
 import org.optaplanner.swing.impl.TangoColorFactory;
 
 public class OptaPlannerExamplesApp extends JFrame {
@@ -134,7 +134,7 @@ public class OptaPlannerExamplesApp extends JFrame {
         titledBorder.setTitleColor(TangoColorFactory.BUTTER_3);
         panel.setBorder(BorderFactory.createCompoundBorder(titledBorder,
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        panel.add(createExampleButton(new VehicleRoutingApp()));
+        panel.add(createExampleButton(new TechnicianSchedulingApp()));
         return panel;
     }
 

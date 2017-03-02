@@ -22,18 +22,18 @@ import java.util.Collection;
 import org.junit.runners.Parameterized;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
 import org.optaplanner.examples.common.persistence.SolutionImporterTest;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingImporter;
+import org.optaplanner.examples.technicianscheduling.persistence.TechnicianSchedulingImporter;
 
 public class VehicleRoutingImporterTest extends SolutionImporterTest {
 
     @Override
     protected AbstractSolutionImporter createSolutionImporter() {
-        return new VehicleRoutingImporter();
+        return new TechnicianSchedulingImporter();
     }
 
     @Parameterized.Parameters(name = "{index}: {0}")
     public static Collection<Object[]> getInputFilesAsParameters() {
-        return getInputFilesAsParameters(new VehicleRoutingImporter());
+        return getInputFilesAsParameters(new TechnicianSchedulingImporter());
     }
 
     public VehicleRoutingImporterTest(File solutionFile) {
