@@ -22,7 +22,7 @@ import org.optaplanner.examples.technicianscheduling.domain.TechnicianScheduling
 public class TechnicianSchedulingDao extends XStreamSolutionDao {
 
     public TechnicianSchedulingDao() {
-        super("vehiclerouting", TechnicianSchedulingSolution.class);
+        super("technicianscheduling", TechnicianSchedulingSolution.class);
     }
 
 }
