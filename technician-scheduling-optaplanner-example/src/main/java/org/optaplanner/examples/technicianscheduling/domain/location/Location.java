@@ -78,9 +78,10 @@ public abstract class Location extends AbstractPersistable {
     public double getAirDistanceDoubleTo(Location location) {
         // Implementation specified by TSPLIB http://www2.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/
         // Euclidean distance (Pythagorean theorem) - not correct when the surface is a sphere
+        // Used weight of 5 to balance travel time vs distance for data set
         double latitudeDifference = location.latitude - latitude;
         double longitudeDifference = location.longitude - longitude;
-        return 10 * Math.sqrt((latitudeDifference * latitudeDifference) + (longitudeDifference * longitudeDifference));
+        return 5 * Math.sqrt((latitudeDifference * latitudeDifference) + (longitudeDifference * longitudeDifference));
     }
 
     /**

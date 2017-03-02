@@ -68,7 +68,7 @@ public class TechnicianSchedulingListPanel extends JPanel implements Scrollable 
     }
     
     private String displayTime(Long time) {
-        long totalMinutes = time / 2000;
+        long totalMinutes = time / 1000;
         long hours = totalMinutes / 60;
         long minutes = totalMinutes % 60;
         String hoursString = String.format("%02d", hours);
