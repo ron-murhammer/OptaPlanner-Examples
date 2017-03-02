@@ -16,8 +16,6 @@
 
 package org.optaplanner.examples.technicianscheduling.app;
 
-import org.optaplanner.core.api.solver.Solver;
-import org.optaplanner.core.api.solver.SolverFactory;
 import org.optaplanner.examples.common.app.CommonApp;
 import org.optaplanner.examples.common.persistence.AbstractSolutionImporter;
 import org.optaplanner.examples.common.persistence.SolutionDao;
@@ -30,7 +28,7 @@ import org.optaplanner.examples.technicianscheduling.swingui.TechnicianSchedulin
 public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolution> {
 
     public static final String SOLVER_CONFIG
-            = "org/optaplanner/examples/technicianscheduling/solver/vehicleRoutingSolverConfig.xml";
+            = "org/optaplanner/examples/technicianscheduling/solver/technicianSchedulingSolverConfig.xml";
 
     public static void main(String[] args) {
         prepareSwingEnvironment();
@@ -38,13 +36,8 @@ public class TechnicianSchedulingApp extends CommonApp<TechnicianSchedulingSolut
     }
 
     public TechnicianSchedulingApp() {
-        super("Vehicle routing",
-                "Official competition name: Capacitated vehicle routing problem (CVRP), " +
-                        "optionally with time windows (CVRPTW)\n\n" +
-                        "Pick up all items of all customers with a few vehicles.\n\n" +
-                        "Find the shortest route possible.\n" +
-                        "Do not overload the capacity of the vehicles.\n" +
-                        "Arrive within the time window of each customer.",
+        super("Technician Scheduling",
+                "Schedule technicians optimally across tasks that have locations and time windows",
                 SOLVER_CONFIG,
                 TechnicianSchedulingPanel.LOGO_PATH);
     }
