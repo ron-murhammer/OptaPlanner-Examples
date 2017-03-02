@@ -46,7 +46,7 @@ import org.optaplanner.examples.common.app.CommonApp;
 import org.optaplanner.examples.common.persistence.AbstractSolutionDao;
 import org.optaplanner.examples.common.swingui.OpenBrowserAction;
 import org.optaplanner.examples.common.swingui.SolverAndPersistenceFrame;
-import org.optaplanner.examples.vehiclerouting.app.VehicleRoutingApp;
+import org.optaplanner.examples.technicianscheduling.app.VehicleRoutingApp;
 import org.optaplanner.swing.impl.TangoColorFactory;
 
 public class OptaPlannerExamplesApp extends JFrame {

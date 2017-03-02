@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2015 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package org.optaplanner.examples.app;
+package org.optaplanner.examples.technicianscheduling.domain.timewindowed;
 
-import org.optaplanner.examples.common.app.LoggingMain;
-import org.optaplanner.examples.technicianscheduling.persistence.VehicleRoutingImporter;
+import org.optaplanner.examples.technicianscheduling.domain.VehicleRoutingSolution;
 
-public class AllExamplesSolutionImporter extends LoggingMain {
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-    public static void main(String[] args) {
-        new AllExamplesSolutionImporter().importAll();
-    }
-
-    public void importAll() {
-        VehicleRoutingImporter.main(new String[0]);
-    }
+@XStreamAlias("VrpTimeWindowedVehicleRoutingSolution")
+public class TimeWindowedVehicleRoutingSolution extends VehicleRoutingSolution {
 
 }
