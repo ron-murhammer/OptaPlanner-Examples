@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.optaplanner.examples.technicianscheduling.domain.timewindowed.solver;
+package org.optaplanner.examples.technicianscheduling.domain.solver;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.optaplanner.core.impl.domain.variable.listener.VariableListener;

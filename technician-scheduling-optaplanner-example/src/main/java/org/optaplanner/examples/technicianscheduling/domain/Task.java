@@ -24,8 +24,8 @@ import org.optaplanner.core.api.domain.variable.PlanningVariable;
 import org.optaplanner.core.api.domain.variable.PlanningVariableGraphType;
 import org.optaplanner.examples.common.domain.AbstractPersistable;
 import org.optaplanner.examples.technicianscheduling.domain.location.Location;
+import org.optaplanner.examples.technicianscheduling.domain.solver.ArrivalTimeUpdatingVariableListener;
 import org.optaplanner.examples.technicianscheduling.domain.solver.DepotAngleCustomerDifficultyWeightFactory;
-import org.optaplanner.examples.technicianscheduling.domain.timewindowed.solver.ArrivalTimeUpdatingVariableListener;
 
 @PlanningEntity(difficultyWeightFactoryClass = DepotAngleCustomerDifficultyWeightFactory.class)
 @XStreamAlias("VrpTimeWindowedCustomer")
